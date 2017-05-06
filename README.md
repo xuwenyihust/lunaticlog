@@ -1,5 +1,10 @@
-# Lunatic
+[![Python](https://img.shields.io/badge/python-3.4%2C%203.5%2C%203.6-blue.svg)](https://travis-ci.org/xuwenyihust/Visor)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/xuwenyihust/Visor/blob/master/LICENSE)
+
+
+# Lunaticlog
 Log loads generator, test if your system can survive under the log spikes.
+
 
 ## Supported Log Format
 What kinds of log formats does it support now?
@@ -9,11 +14,9 @@ What kinds of log formats does it support now?
 `127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326`
 
 
-## Usage
+## Install
 
-* Install the dependencies
-
-`pip install -r requirements.txt`
+`pip install lunaticlog`
 
 
 ## Parameters
@@ -21,4 +24,8 @@ What kinds of log formats does it support now?
 * `-m` The log generator mode, which log format to generate.
 
 * `-o` The output log file path.
+
+
+## License
+See the LICENSE file for license rights and limitations (MIT).
 
