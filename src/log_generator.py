@@ -51,15 +51,25 @@ def main():
 
 	# Identify the log format
 	mode = args.m
+	# Set default log format
+	if not mode:
+		mode = 'access'
+	# Check if the log format is valid
 	if mode not in ['access']:
-		print('Argument error.')
+		print('Argument error: -o')
+
+	# Identufy the output path
+	out_path = args.o
+	# Set default output path
+	if not out_path:
+		out_path = './log/lunatic_log.log'
 
 	# Instantiate the logger
 	log = logging.getLogger('Gen')
 	# Set the level
 	logging.basicConfig(level=logging.INFO)
 	# Instantiate a file Handler
-	out = logging.FileHandler(args.o)
+	out = logging.FileHandler(out_path)
 
 	# Instantiate a Formatter
 	# Format the time string
