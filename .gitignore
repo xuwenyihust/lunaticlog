@@ -1,5 +1,6 @@
 # Testing log
 /tests/log/
+*.txt
 
 # Virtualenv
 lunatic/
