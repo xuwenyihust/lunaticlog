@@ -14,7 +14,7 @@ What kinds of log formats does it support now?
 
 * Apache Access Log
 
-`127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326`
+  `127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326`
 
 
 ## Install
@@ -22,12 +22,16 @@ What kinds of log formats does it support now?
 `pip install lunaticlog`
 
 
-## Parameters
+## Usage
 
-* `-m` The log generator mode, which log format to generate.
+### apache Class
 
-* `-o` The output log file path.
+```python
+from lunaticlog import apache
 
+log_gen = apache(out_path='./apache.log', lines=['heartbeat', 'access'], methods=['GET', 'POST', 'PUT', 'DELETE'], forever=True, count=1)
+log_gen.run()
+```
 
 ## License
 See the LICENSE file for license rights and limitations (MIT).
