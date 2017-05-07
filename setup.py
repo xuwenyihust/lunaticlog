@@ -6,9 +6,9 @@ from setuptools import setup, find_packages
 
 setup(
 	name = 'lunaticlog',
-	version = '0.0.dev5',
+	version = '0.0.dev6',
 	description = 'A log generator to test your monitor system.',
-	url = 'https://github.com/xuwenyihust/lunatic',
+	url = 'https://github.com/xuwenyihust/lunaticlog',
 	author = 'Wenyi Xu',
 	author_email = 'wenyixu101@gmail.com',
 	license = 'MIT',
