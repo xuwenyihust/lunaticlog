@@ -70,7 +70,7 @@ class apache(object):
 			t = datetime.datetime.now().strftime('%d/%b/%Y:%H:%M:%S -0700')
 
 			#method = numpy.random.choice(self.methods, p=self.methods_dist)
-			method = random.choice(['GET', 'PUT'])
+			method = random.choice(self.methods)
 			#resource = self.resources[random.randint(0, len(self.resources)-1)]
 			resource = '/apache_pb.gif'
 			#version = self.versions[random.randint(0, len(self.versions)-1)]
