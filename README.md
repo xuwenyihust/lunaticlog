@@ -22,14 +22,14 @@ What kinds of log formats does it support now?
 `pip install lunaticlog`
 
 
-## Usage
+## Usage Example
 
 ### apache Class
 
 ```python
 from lunaticlog import apache
 
-log_gen = apache(out_path='./apache.log', lines=['heartbeat', 'access'], methods=['GET', 'POST', 'PUT', 'DELETE'], forever=True, count=1)
+log_gen = apache(out_path='./apache.log', lines=['heartbeat', 'access'])
 log_gen.run()
 ```
 
