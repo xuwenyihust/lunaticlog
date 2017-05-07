@@ -3,7 +3,12 @@ python:
  - "3.4"
  - "3.5"
  - "3.6"
-install: "pip install -r requirements.txt"
-script: pytest
+install: 
+ - "pip install -r requirements.txt"
+ - "pip install coveralls"
+script: 
+ - coverage run setup.py test
+after_success:
+ - coveralls
 
 
