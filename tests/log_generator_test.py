@@ -3,7 +3,7 @@ from .. import apache
 import asyncio
 from asyncio import coroutine
 import os
-
+import re
 
 
 # Testing Class
@@ -20,12 +20,24 @@ def test_heartbeat_lines():
 		assert len(fields) == 8
 	except:
 		assert False	
+
 	
-	
+def	test_access_lines():
+	gen = apache(out_path='./tests/log/test_access_lines.txt', lines=['access'], forever=False, count=1)
+	gen.run()
 
+	try:
+		f = open('./tests/log/test_access_lines.txt')
+		line = f.readlines()[0]
+		# Extract the time field
+		log_time = re.findall(r'\[(.*?)\]', line)
+		assert len(log_time) == 1
+		# Extract the message field
+		log_msg = re.findall(r'\"(.*?)\"', line)
+		assert len(log_msg) == 1
 
-
-
+	except:
+		assert False
 
 
 

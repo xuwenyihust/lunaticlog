@@ -36,16 +36,18 @@ class apache(object):
 		out.setFormatter(log_format)
 		# Add the file Handler 'out' to the logger'log'
 		self.log.addHandler(out)
-	
+
+		#self.loop = asyncio.get_event_loop()
 
 	def run(self):
-		self.loop = asyncio.get_event_loop()
+		loop = asyncio.new_event_loop()
+		asyncio.set_event_loop(loop)
 		try:
-			self.loop.run_until_complete(
+			loop.run_until_complete(
 				asyncio.wait([self.lines_gen[self.lines_full.index(x)] for x in self.lines])
-			)
+		)
 		finally:
-			self.loop.close()
+			loop.close()
 
 
 
