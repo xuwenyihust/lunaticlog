@@ -6,7 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = lunaticlog
 SOURCEDIR     = source
-BUILDDIR      = lunaticlog
+BUILDDIR      = build
 
 # Put it first so that "make" without argument is like "make help".
 help:
