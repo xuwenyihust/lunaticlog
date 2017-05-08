@@ -82,7 +82,7 @@ class apache(object):
 			self.log.info('%s %s %s [%s] "%s" %s %s', ip, user_identifier, user_id, t, msg, code, size)
 			if self.count > 0:
 				self.count -= 1
-			yield from asyncio.sleep(random.randint(1, 5))
+			yield from asyncio.sleep(random.randint(1, 3))
 
 
 

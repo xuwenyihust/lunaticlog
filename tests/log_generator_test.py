@@ -44,6 +44,33 @@ def	test_access_lines_format():
 		assert False
 
 
+# Test param: lines
+def test_lines_control():
+	gen = apache(out_path='./test_lines_control.txt', lines=['heartbeat', 'access'], methods=['GET', 'PUT', 'POST', 'DELETE'], forever=False, count=10)
+	gen.run()
+
+	lines_li = set()
+
+	try:
+		f = open('./test_lines_control.txt')
+		lines = f.readlines()
+		for line in lines:
+			# Extract the message field
+			log_msg = re.findall(r'\"(.*?)\"', line)[0]
+			if log_msg == 'HEARTBEAT':
+				lines_li.add('heartbeat')
+			else:
+				log_method = log_msg.split()[0]
+				if log_method in ['GET', 'PUT', 'POST', 'DELETE']:
+					lines_li.add('access')
+
+		assert lines_li == set(['heartbeat', 'access'])
+
+	except:
+		assert False
+
+
+# Test param: methods
 def test_access_lines_method():
 	# Test GET generation
 	gen = apache(out_path='./test_access_lines_method.txt', lines=['access'], methods=['GET'], forever=False, count=3)
