@@ -7,8 +7,15 @@
 
 
 # Lunaticlog
-A mock HTTP log generator, use it to test if your monitor can survive under the log spikes. 
+Lunaticlog is a mock HTTP log generator package, use it to test if your monitor can survive under different conditions. 
 
+
+## Documentation
+Lunaticlog's documentation can be found on https://xuwenyihust.github.io//lunaticlog/.
+
+
+## Overview
+Lunaticlog can generate logs with customized contents. The log traffic can also be configured.
 
 ## Supported Log Format
 What kinds of log formats does it support now?
