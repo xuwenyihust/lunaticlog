@@ -7,7 +7,7 @@
 
 
 # Lunaticlog
-Log loads generator, test if your system can survive under the log spikes.
+A mock HTTP log generator, use it to test if your monitor can survive under the log spikes. 
 
 
 ## Supported Log Format
