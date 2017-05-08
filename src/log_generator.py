@@ -12,7 +12,7 @@ import numpy
 # Apache Access Logs
 class apache(object):
 
-	def __init__(self, out_path='./apache.log', lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 0.2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], forever=True, count=1):
+	def __init__(self, out_path='./apache.log', lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='normal', forever=True, count=1):
 		# Assign the lines to generate
 		self.lines = lines
 		self.lines_full = ['heartbeat', 'access']
@@ -28,6 +28,8 @@ class apache(object):
 		# Assign the intervals
 		self.heartbeat_interval = heartbeat_interval
 		self.access_interval = access_interval
+		# Assign the generator mode
+		self.mode = mode
 
 		# Instantiate the logger
 		self.log = logging.getLogger('Gen')
@@ -87,8 +89,22 @@ class apache(object):
 			self.log.info('%s %s %s [%s] "%s" %s %s', ip, user_identifier, user_id, t, msg, code, size)
 			if self.count > 0:
 				self.count -= 1
-			yield from asyncio.sleep(random.uniform(self.access_interval[0], self.access_interval[1]))
 
+			# According to the generator mode:
+			# 'normal' mode - uniform distribution between min & max intervals
+			if self.mode == 'normal':
+				yield from asyncio.sleep(random.uniform(self.access_interval[0], self.access_interval[1]))
+			# 'push' mode - at highest rate
+			elif self.mode == 'push':
+				yield from asyncio.sleep(self.access_interval[0])
+			# 'spike' mode
+			elif self.mode == 'spike':
+				mean = (self.access_interval[0]+self.access_interval[1])/2
+				# Standard deviation
+				sigma = (self.access_interval[1]-self.access_interval[0])/2
+				yield from asyncio.sleep(numpy.random.normal(mean, sigma))
+			else:
+				yield from asyncio.sleep(random.uniform(self.access_interval[0], self.access_interval[1]))
 
 
 
