@@ -138,8 +138,22 @@ def test_access_lines_method():
 	except:
 		assert False
 
+# Test param: methods_p
+def test_access_lines_method_dist():
+	gen = apache(out_path='./test_access_lines_method_dist.txt', lines=['access'], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p=[1.0, 0, 0, 0], forever=False, count=3)
+	gen.run()
 
-
+	try:
+		f = open('./test_access_lines_method_dist.txt')
+		lines = f.readlines()
+		for line in lines:
+			# Extract the message field
+			log_msg = re.findall(r'\"(.*?)\"', line)[0]
+			# Extract the http method
+			log_method = log_msg.split()[0]
+			assert log_method == 'GET'
+	except:
+		assert False
 
 
 
