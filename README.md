@@ -11,7 +11,7 @@ Lunaticlog is a mock HTTP log generator package, use it to test if your monitor 
 
 
 ## Documentation
-Lunaticlog's documentation can be found on https://xuwenyihust.github.io//lunaticlog/.
+Lunaticlog's documentation can be found on https://xuwenyihust.github.io/lunaticlog/lunaticlog/html/.
 
 
 ## Overview
