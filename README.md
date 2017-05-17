@@ -7,7 +7,7 @@
 
 
 # Lunaticlog
-Lunaticlog is a mock HTTP log generator package, use it to test if your monitor can survive under different conditions. 
+Lunaticlog is a mock HTTP log generator package, use it's fake log workloads to test if your monitor / analyzer can survive various extreme conditions. 
 
 
 ## Documentation
@@ -17,12 +17,35 @@ Lunaticlog's documentation can be found on https://xuwenyihust.github.io/lunatic
 ## Overview
 Lunaticlog can generate logs with customized contents. The log traffic can also be configured.
 
-## Supported Log Format
+### Supported Log Format
 What kinds of log formats does it support now?
 
 * Apache Access Log
 
   `127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326`
+
+### Log Generation Mode
+The fate of lunaticlog is to create chaos to test your system. So it needs to generate various extreme cases, such as sudden traffic spikes.
+
+What traffic modes are supported now?
+
+* **normal** 
+
+  Generate logs at a random rate, which is uniformly distributed.
+
+  [TODO] Add traffic chart
+
+* **push**
+
+  Generate logs at highest speed(whihch can be configured).
+
+  [TODO] Add traffic chart
+
+* **spike**
+
+  Generate logs at sudden very high rates periodically.
+  
+  [TODO] Add traffic chart
 
 
 ## Install
