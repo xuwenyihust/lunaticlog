@@ -6,13 +6,13 @@ from setuptools import setup, find_packages
 
 setup(
 	name = 'lunaticlog',
-	version = '0.1.0',
-	description = 'A log generator to test your monitor system.',
+	version = '0.1.1',
+	description = 'A fake log generator to test your monitor system.',
 	url = 'https://github.com/xuwenyihust/lunaticlog',
 	author = 'Wenyi Xu',
 	author_email = 'wenyixu101@gmail.com',
 	license = 'MIT',
-	keywords='log monitor apache',
+	keywords='fake log monitor apache',
 
 	packages = find_packages(),
 
