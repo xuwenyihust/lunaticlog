@@ -7,12 +7,13 @@ import asyncio
 import datetime
 from asyncio import coroutine
 import numpy
+from subprocess import check_call
 
 
 # Apache Access Logs
 class apache(object):
 
-	def __init__(self, out_path='./apache.log', lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
+	def __init__(self, out_path='./', out_format=['stdout', 'log'], lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
 		# Assign the lines to generate	
 		self.lines = lines
 		self.lines_full = ['heartbeat', 'access']
@@ -31,18 +32,14 @@ class apache(object):
 		# Assign the generator mode
 		self.mode = mode
 
-		# Instantiate the logger
-		self.log = logging.getLogger('Gen')
-		# Set the level
-		logging.basicConfig(level=logging.INFO)
-		# Instantiate a file Handler
-		out = logging.FileHandler(out_path, mode='w')
+		# Assign the output format
+		self.out_format = out_format
+		# Assign the output path
+		self.out_log = out_path + 'apache.log'
+		if 'log' in self.out_format or 'gzip' in self.out_format:
+			self.f_log = open(self.out_log, 'w')
+		#self.out_gz
 
-		log_format = logging.Formatter("%(message)s")
-		# Set the Formatter for this Handler to form
-		out.setFormatter(log_format)
-		# Add the file Handler 'out' to the logger'log'
-		self.log.addHandler(out)
 
 
 	def run(self):
@@ -54,6 +51,10 @@ class apache(object):
 		)
 		finally:
 			loop.close()
+			if 'log' in self.out_format or 'gzip' in self.out_format:
+				self.f_log.close()
+				if 'gzip' in self.out_format:
+					check_call(['gzip', self.out_log])
 
 
 
@@ -61,11 +62,18 @@ class apache(object):
 	def heartbeat_lines(self):
 		while self.forever or self.count > 0:
 			t = self.get_time_field()
-			self.log.info('- - - [%s] "%s" - -', t, 'HEARTBEAT')	
+			self.output_heartbeat(t)
+			#self.log.info('- - - [%s] "%s" - -', t, 'HEARTBEAT')	
 			if self.count > 0:
 				self.count -= 1
 			yield from asyncio.sleep(self.heartbeat_interval)
 
+	def output_heartbeat(self, t):
+		string = '- - - [' + t + '] "' + 'HEARTBEAT" - -'
+		if 'stdout' in self.out_format:
+			print(string)
+		if 'log' in self.out_format:
+			self.f_log.write(string + '\n')
 
 	def get_time_field(self):
 		return datetime.datetime.now().strftime('%d/%b/%Y:%H:%M:%S -0700')
@@ -91,7 +99,8 @@ class apache(object):
 			code = self.get_code()
 			#size = random.randint(1024, 10240)
 			size = self.get_size()
-			self.log.info('%s %s %s [%s] "%s" %s %s', ip, user_identifier, user_id, t, msg, code, size)
+			#self.log.info('%s %s %s [%s] "%s" %s %s', ip, user_identifier, user_id, t, msg, code, size)
+			self.output_access(ip, user_identifier, user_id, t, msg, code, size)
 
 			if self.count > 0:
 				self.count -= 1
@@ -100,6 +109,12 @@ class apache(object):
 			sleep_time = self.get_access_sleep_time()
 			yield from asyncio.sleep(sleep_time)
 
+	def output_access(self, ip, user_identifier, user_id, t, msg, code, size):
+		string = ip+' '+user_identifier+' '+user_id+' '+'['+t+']'+msg+code+str(size)
+		if 'stdout' in self.out_format:
+			print(string)
+		if 'log' in self.out_format:
+			self.f_log.write(string + '\n')
 
 	def get_ip(self):
 		return '.'.join(str(random.randint(0, 255)) for i in range(4))
