@@ -43,7 +43,7 @@ What traffic modes are supported now?
 
 * **push**
 
-  Generate logs at highest speed(whihch can be configured).
+  Generate logs at highest speed(which can be configured).
 
 * **spike**
 
