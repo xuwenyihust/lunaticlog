@@ -43,6 +43,7 @@ What traffic modes are supported now?
   
 <img src="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_uniform.png" width="320" height="240"/><img src="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_spike.png" width="320" height="240"/><img src="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_push.png" width="320" height="240"/>
 
+The scripts to plot these bandwidth charts can be found under `./scripts`.
 
 ## Install
 
