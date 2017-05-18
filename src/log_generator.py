@@ -12,7 +12,7 @@ import numpy
 # Apache Access Logs
 class apache(object):
 
-	def __init__(self, out_path='./apache.log', lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='normal', forever=True, count=1):
+	def __init__(self, out_path='./apache.log', lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
 		# Assign the lines to generate	
 		self.lines = lines
 		self.lines_full = ['heartbeat', 'access']
@@ -139,7 +139,7 @@ class apache(object):
 
 	def get_access_sleep_time(self):
 		# 'normal' mode - uniform distribution between min & max intervals
-		if self.mode == 'normal':
+		if self.mode == 'uniform':
 			return random.uniform(self.access_interval[0], self.access_interval[1])
 		# 'push' mode - at highest rate
 		elif self.mode == 'push':
