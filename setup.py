@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name = 'lunaticlog',
-	version = '0.1.1',
+	version = '0.1.2',
 	description = 'A fake log generator to test your monitor system.',
 	url = 'https://github.com/xuwenyihust/lunaticlog',
 	author = 'Wenyi Xu',
