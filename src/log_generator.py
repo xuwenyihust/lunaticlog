@@ -110,7 +110,7 @@ class apache(object):
 			yield from asyncio.sleep(sleep_time)
 
 	def output_access(self, ip, user_identifier, user_id, t, msg, code, size):
-		string = ip+' '+user_identifier+' '+user_id+' '+'['+t+']'+msg+code+str(size)
+		string = ip+' '+user_identifier+' '+user_id+' '+'['+t+'] "'+msg+'" '+code+' '+str(size)
 		if 'stdout' in self.out_format:
 			print(string)
 		if 'log' in self.out_format:
