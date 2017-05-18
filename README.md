@@ -29,23 +29,19 @@ The fate of lunaticlog is to create chaos to test your system. So it needs to ge
 
 What traffic modes are supported now?
 
-* **normal** 
+* **uniform** 
 
   Generate logs at a random rate, which is uniformly distributed.
-
-  [TODO] Add traffic chart
 
 * **push**
 
   Generate logs at highest speed(whihch can be configured).
 
-  [TODO] Add traffic chart
-
 * **spike**
 
   Generate logs at sudden very high rates periodically.
   
-  [TODO] Add traffic chart
+<img src="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_uniform.png" width="320" height="240"/><img src="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_spike.png" width="320" height="240"/><img src="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_push.png" width="320" height="240"/>
 
 
 ## Install
