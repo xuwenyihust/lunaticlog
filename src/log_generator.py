@@ -15,13 +15,13 @@ class apache(object):
 
 	def __init__(self, out_path='./apache.log', out_format=['stdout', 'log'], lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
 		# Assign the lines to generate	
-		self.lines = lines
 		self.lines_full = ['heartbeat', 'access']
 		self.lines_gen = [self.heartbeat_lines(), self.access_lines()]
+		self.lines = self.assign_lines(lines)
 		# Assign the http methods to generate	
-		self.methods = methods	
+		self.methods = self.assign_methods(methods)
 		# Assign the methods distribution
-		self.methods_p = methods_p
+		self.methods_p = self.assign_methods_p(methods_p)
 		# Run forever or not
 		self.forever = forever
 		# Total # of logs to generate
@@ -109,12 +109,48 @@ class apache(object):
 			sleep_time = self.get_access_sleep_time()
 			yield from asyncio.sleep(sleep_time)
 
+
+	def assign_lines(self, lines):
+		lines_set = set(lines)
+		lines_full_set = set(self.lines_full)
+
+		if not lines_set.issubset(lines_full_set):
+			raise Exception("Unsupported line types.")
+		if len(lines_set) != len(lines):
+			raise Exception("Duplicated line types.")
+		return lines
+
+
+	def assign_methods(self, methods):
+		methods_set = set(methods)
+		methods_full_set = set(['GET', 'POST', 'PUT', 'DELETE'])
+
+		if not methods_set.issubset(methods_full_set):
+			raise Exception("Unsupported method types.")
+		if len(methods_set) != len(methods):
+			raise Exception("Duplicated method types.")
+		return methods
+
+
+	def assign_methods_p(self, methods_p):
+		if len(methods_p) != len(self.methods):
+			raise Exception("Length of methods_p doesn't equal length of methods.")
+		if abs(1-sum(methods_p)) > 0.01:
+			raise Exception("Sum of methods_p must equals 1.")
+		for x in methods_p:
+			if x < 0 or x > 1:
+				raise Exception("All members of methods_p must be in the range of 0 to 1 ")	
+		return methods_p
+	
+
 	def output_access(self, ip, user_identifier, user_id, t, msg, code, size):
 		string = ip+' '+user_identifier+' '+user_id+' '+'['+t+'] "'+msg+'" '+code+' '+str(size)
 		if 'stdout' in self.out_format:
 			print(string)
 		if 'log' in self.out_format:
 			self.f_log.write(string + '\n')
+
+
 
 	def get_ip(self):
 		return '.'.join(str(random.randint(0, 255)) for i in range(4))
