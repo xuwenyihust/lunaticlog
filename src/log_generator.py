@@ -13,7 +13,7 @@ from subprocess import check_call
 # Apache Access Logs
 class apache(object):
 
-	def __init__(self, out_path='./', out_format=['stdout', 'log'], lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
+	def __init__(self, out_path='./apache.log', out_format=['stdout', 'log'], lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
 		# Assign the lines to generate	
 		self.lines = lines
 		self.lines_full = ['heartbeat', 'access']
@@ -35,7 +35,7 @@ class apache(object):
 		# Assign the output format
 		self.out_format = out_format
 		# Assign the output path
-		self.out_log = out_path + 'apache.log'
+		self.out_log = out_path
 		if 'log' in self.out_format or 'gzip' in self.out_format:
 			self.f_log = open(self.out_log, 'w')
 		#self.out_gz

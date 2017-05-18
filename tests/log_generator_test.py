@@ -101,7 +101,7 @@ def test_get_size():
 		assert False
 
 
-'''def test_heartbeat_lines_format():
+def test_heartbeat_lines_format():
 	gen = apache(out_path='./test_heartbeat_lines_format.txt', lines=['heartbeat'], forever=False, count=1)
 	gen.run()
 	
@@ -249,7 +249,7 @@ def test_access_lines_method_dist():
 			assert log_method == 'GET'
 	except:
 		assert False
-'''
+
 
 
 
