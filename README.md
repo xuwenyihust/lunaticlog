@@ -45,6 +45,15 @@ What traffic modes are supported now?
 
 The scripts to plot these bandwidth charts can be found under `./scripts`.
 
+### Output Formats
+
+* STDOUT
+
+* `.log` file
+
+* `.gz` file
+
+
 ## Install
 
 `pip install lunaticlog`
