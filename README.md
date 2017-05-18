@@ -24,6 +24,10 @@ What kinds of log formats does it support now?
 
   `127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326`
 
+* [TODO] Nginx Access Log
+
+* [TODO] Amazon S3 Log
+
 ### Log Generation Mode
 The fate of lunaticlog is to create chaos to test your system. So it needs to generate various extreme cases, such as sudden traffic spikes.
 
