@@ -140,7 +140,7 @@ def	test_access_lines_format():
 
 
 # Test param: lines
-def test_lines_control():
+'''def test_lines_control():
 	gen = apache(out_path='./test_lines_control.txt', lines=['heartbeat', 'access'], methods=['GET', 'PUT', 'POST', 'DELETE'], forever=False, count=10)
 	gen.run()
 
@@ -249,7 +249,7 @@ def test_access_lines_method_dist():
 			assert log_method == 'GET'
 	except:
 		assert False
-
+'''
 
 
 
