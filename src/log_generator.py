@@ -116,6 +116,7 @@ class apache_gen(object):
 	def forever(self, val):
 		if val not in [True, False]:
 			raise Exception("forever must be either True or False")
+		return val
 
 	@property
 	def count(self):
@@ -124,6 +125,14 @@ class apache_gen(object):
 	@property
 	def heartbeat_interval(self):
 		return self._heartbeat_interval
+
+	# When given heartbeat_interval, 
+	# heartbeat must be one of the methods to be generated
+	@heartbeat_interval.setter
+	def heartbeat_interval(self, val):
+		if val is not None and 'heartbeat' not in self.lines
+			raise Exception('an only set heartbeat_interval when generate heartbeat')
+		return val
 
 	@property
 	def access_interval(self):
