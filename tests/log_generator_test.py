@@ -1,48 +1,198 @@
 import pytest
+from .. import log_gen
 from .. import apache_gen
 import asyncio
 from asyncio import coroutine
 import os
 import re
 
+##########################################
+#####
+#####	Test Abstract Class
+#####
+##########################################
+def test_abstract_class():
 
-#def test_assign_lines():
-#	gen = apache_gen()
-#	with pytest.raises(Exception) as error_info:
-#		gen.assign_lines(['access', 'access'])		
-#	assert str(error_info.value) == "Duplicated line types."
+	try:
+		gen = log_gen()
+		assert False, 'Abstract class instance created!'
+	except TypeError:
+		pass
 
-#	with pytest.raises(Exception) as error_info:
-#		gen.assign_lines(['whatever'])
-#	assert str(error_info.value) == "Unsupported line types."
+	try:
+		class one_log_gen(log_gen):
+			@property
+			def methods(self):
+				pass
+			@property
+			def methods_p(self):
+				pass
+			@property
+			def mode(self):
+				pass
+			@property
+			def out_format(self):
+				pass
+			def run(self):
+				pass
+		gen = one_log_gen()
+		assert False, "Abstract class property not implemented" 
+	except TypeError:
+		pass
+
+	try:
+		class one_log_gen(log_gen):
+			@property
+			def lines(self):
+				pass
+			@property
+			def method(self):
+				pass
+			@property
+			def methods_p(self):
+				pass
+			@property
+			def mode(self):
+				pass
+			@property
+			def out_format(self):
+				pass
+		gen = one_log_gen()
+		assert False, "Abstract class method not implemented"
+	except TypeError:
+		pass
+
+##########################################
+#####
+#####	Test Apache Attribute Setting
+#####
+##########################################
+
+def test_attr_lines():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.lines = set('access')
+	assert str(error_info.value) == 'lines should be a list.'
+
+	with pytest.raises(Exception) as error_info:
+		gen.lines = ['whatever']
+	assert str(error_info.value) == "Unsupported line types."
+
+	with pytest.raises(Exception) as error_info:
+		gen.lines = ['access', 'access']
+	assert str(error_info.value) == "Duplicated line types."
 
 
-#def test_assign_methods():
-#	gen = apache_gen()
-#	with pytest.raises(Exception) as error_info:
-#		gen.assign_methods(['GET', 'POP', 'PUT', 'DELETE'])
-#	assert str(error_info.value) == "Unsupported method types."
-#
-#	with pytest.raises(Exception) as error_info:
-#		gen.assign_methods(['GET', 'GET', 'POST', 'PUT', 'DELETE'])
-#	assert str(error_info.value) == "Duplicated method types."
+def test_attr_methods():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.methods = set(['GET', 'POP', 'PUT', 'DELETE'])
+	assert str(error_info.value) == 'methods should be a list.'
+
+	with pytest.raises(Exception) as error_info:
+		gen.methods = ['GET', 'POP', 'PUT', 'DELETE']
+	assert str(error_info.value) == "Unsupported method types."
+
+	with pytest.raises(Exception) as error_info:
+		gen.methods = ['GET', 'GET', 'POST', 'PUT', 'DELETE']
+	assert str(error_info.value) == "Duplicated method types."
 
 
-#def test_assign_methods_p():
-#	gen = apache_gen()
-#	with pytest.raises(Exception) as error_info:
-#		gen.methods = ['GET']
-#		gen.assign_methods_p([0.5, 0.5])
-#	assert str(error_info.value) == "Length of methods_p doesn't equal length of methods."	
+def test_attr_methods_p():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.methods_p = set([0.6, 0.4])	
+	assert str(error_info.value) == 'methods_p should be a list.'
 
-#	with pytest.raises(Exception) as error_info:
-#		gen.methods = ['GET', 'POST']
-#		gen.assign_methods_p([0.6, 0.7])
-#	assert str(error_info.value) == "Sum of methods_p must equals 1."
+	with pytest.raises(Exception) as error_info:
+		gen.methods = ['GET', 'POST', 'PUT', 'DELETE']
+		gen.methods_p = [0.5, 0.5]
+	assert str(error_info.value) == "Length of methods_p doesn't equal length of methods." 
 
-#	with pytest.raises(Exception) as error_info:
-#		gen.assign_methods_p([-1, 2])
-#	assert str(error_info.value) == "All members of methods_p must be in the range of 0 to 1 "
+	with pytest.raises(Exception) as error_info:
+		gen.methods = ['GET', 'POST', 'PUT', 'DELETE']
+		gen.methods_p = [0.6, 0.7, 0.1, 0.1]
+	assert str(error_info.value) == "Sum of methods_p must equals 1."
+
+	with pytest.raises(Exception) as error_info:
+		gen.methods_p = [-1, 1, 0.5, 0.5]
+	assert str(error_info.value) == "All members of methods_p must be in the range of 0 to 1 "
+
+
+def test_attr_forever():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.forever = 'AHA'
+	assert str(error_info.value) == "forever must be either True or False"
+
+
+def test_attr_heartbeat_interval():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.heartbeat_interval = '0.1'
+	assert str(error_info.value) == "heartbeat_interval value should be either integer or decimal"
+
+	with pytest.raises(Exception) as error_info:
+		gen.lines = ['access']
+		gen.heartbeat_interval = 0.1
+	assert str(error_info.value) == "Only set heartbeat_interval when generate heartbeat"
+	
+
+def test_attr_access_interval():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = 1
+	assert str(error_info.value) == "access_interval should be a list"
+	
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = set([1,2])
+	assert str(error_info.value) == "access_interval should be a list"
+
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = [1]
+	assert str(error_info.value) == "access_interval should be a list containing 2 elements"
+
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = ['1', 2]
+	assert str(error_info.value) == "access_interval[0] should be either integer or decimal"
+
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = [1, '2']
+	assert str(error_info.value) == "access_interval[1] should be either integer or decimal"
+
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = [2, 1]
+	assert str(error_info.value) == "access_interval[0] should be smaller than access_interval[1]"
+
+
+def test_attr_mode():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.mode = 'drama'
+	assert str(error_info.value) == "Unrecognized mode"
+
+
+def test_attr_out_format():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.out_format = 'log'
+	assert str(error_info.value) == "out_format should be a list"
+
+	with pytest.raises(Exception) as error_info:
+		gen.out_format = []
+	assert str(error_info.value) == "Should select at least 1 output format"
+	
+	with pytest.raises(Exception) as error_info:
+		gen.out_format = ['stdout', 'cat']
+	assert str(error_info.value) == "Unsupported output format"
+
+
+##########################################
+#####
+#####   Test 
+#####
+##########################################
+
 
 def test_get_time_field():
 	gen = apache_gen()
