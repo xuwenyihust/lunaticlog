@@ -45,6 +45,10 @@ def test_attr_methods():
 def test_attr_methods_p():
 	gen = apache_gen()
 	with pytest.raises(Exception) as error_info:
+		gen.methods_p = set(0.6)
+	assert str(error_info.value) == 'methods_p should be a list.'
+
+	with pytest.raises(Exception) as error_info:
 		gen.methods = ['GET']
 		gen.methods_p = [0.5, 0.5]
 	assert str(error_info.value) == "Length of methods_p doesn't equal length of methods." 

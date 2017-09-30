@@ -92,6 +92,8 @@ class apache_gen(object):
 	def methods_p(self, val):
 		if type(val) != type([1,2,3]):
 			raise Exception('methods_p should be a list.')
+		if len(val) != len(self.methods):
+			raise Exception("Length of methods_p doesn't equal length of methods.")
 		if abs(1-sum(val)) > 0.01:
 			raise Exception("Sum of methods_p must equals 1.")
 		for x in val:
