@@ -69,14 +69,32 @@ The scripts to plot these bandwidth charts can be found under `./scripts`.
 
 ## Usage Example
 
-### apache Class
+### apache_gen Class
 
 ```python
 from lunaticlog import apache
 
-log_gen = apache(out_path='./apache.log', lines=['heartbeat', 'access'])
+log_gen = apache_gen(out_path='./apache.log', lines=['heartbeat', 'access'])
 log_gen.run()
 ```
+
+**Arguments**
+
+* `out_path`
+
+* `out_format`
+
+* `lines`
+
+* `heartbeat_interval`
+
+* `access_interval`
+
+* `methods`
+
+* `methods_p`
+
+* `mode`
 
 ## License
 See the LICENSE file for license rights and limitations (MIT).
