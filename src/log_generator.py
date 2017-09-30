@@ -55,21 +55,67 @@ class apache_gen(object):
 	def lines_gen(self):
 		return self._lines_gen
 
+	@lines_gen.setter
+	def lines_gen(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception('lines_gen should be a list.')
+		self._lines_gen = val
+
 	@property
 	def lines(self):
 		return self._lines
+
+	@lines.setter
+	def lines(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception('lines should be a list.')
+		lines_set = set(val)
+		lines_full_set = set(self.lines_full)
+		if not lines_set.issubset(lines_full_set):
+			raise Exception("Unsupported line types.")
+		if len(lines_set) != len(val):
+			raise Exception("Duplicated line types.")
+		return val
 
 	@property
 	def methods(self):
 		return self._methods
 
+	@methods.setter
+	def methods(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception('methods should be a list.')
+		methods_set = set(val)
+		methods_full_set = set(['GET', 'POST', 'PUT', 'DELETE'])
+		if not methods_set.issubset(methods_full_set):
+			raise Exception("Unsupported method types.")
+		if len(methods_set) != len(val):
+			raise Exception("Duplicated method types.")
+		return val
+
 	@property
 	def methods_p(self):
 		return self._methods_p
 
+	@methods_p.setter
+	def methods_p(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception('methods_p should be a list.')
+		if abs(1-sum(val)) > 0.01:
+			raise Exception("Sum of methods_p must equals 1.")
+		for x in val:
+			if x < 0 or x > 1:
+				raise Exception("All members of methods_p must be in the range of 0 to 1 ")	
+		return val
+
 	@property
 	def forever(self):
 		return self._forever
+
+	@forever.setter
+	def forever(self, val):
+		if val not in [True, False]:
+			raise Exception("forever must be either True or False")
 
 	@property
 	def count(self):
