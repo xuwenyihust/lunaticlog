@@ -15,7 +15,7 @@ class apache_gen(object):
 
 	def __init__(self, out_path='./apache.log', out_format=['stdout', 'log'], lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
 		# Assign the lines to generate	
-		self.lines_full = ['heartbeat', 'access']
+		self._lines_full = ['heartbeat', 'access']
 		self.lines_gen = [self.heartbeat_lines(), self.access_lines()]
 		self.lines = self.assign_lines(lines)
 		# Assign the http methods to generate	
@@ -40,6 +40,10 @@ class apache_gen(object):
 			self.f_log = open(self.out_log, 'w')
 		#self.out_gz
 
+
+	@property
+	def lines_full(self):
+		return self._lines_full
 
 
 	def run(self):
