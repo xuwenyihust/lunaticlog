@@ -66,7 +66,7 @@ class apache_gen(object):
 			raise Exception("Unsupported line types.")
 		if len(lines_set) != len(val):
 			raise Exception("Duplicated line types.")
-		return val
+		self._lines = val
 
 	@property
 	def methods(self):
@@ -82,7 +82,7 @@ class apache_gen(object):
 			raise Exception("Unsupported method types.")
 		if len(methods_set) != len(val):
 			raise Exception("Duplicated method types.")
-		return val
+		self._methods = val
 
 	@property
 	def methods_p(self):
@@ -99,7 +99,7 @@ class apache_gen(object):
 		for x in val:
 			if x < 0 or x > 1:
 				raise Exception("All members of methods_p must be in the range of 0 to 1 ")	
-		return val
+		self._methods_p = val
 
 	@property
 	def forever(self):
@@ -109,11 +109,15 @@ class apache_gen(object):
 	def forever(self, val):
 		if val not in [True, False]:
 			raise Exception("forever must be either True or False")
-		return val
+		self._forever = val
 
 	@property
 	def count(self):
 		return self._count
+		
+	@count.setter
+	def count(self, val):
+		self._count = val
 
 	@property
 	def heartbeat_interval(self):
@@ -123,21 +127,53 @@ class apache_gen(object):
 	# heartbeat must be one of the methods to be generated
 	@heartbeat_interval.setter
 	def heartbeat_interval(self, val):
+		if type(val) != type(1) and type(val) != type(0.5):
+			raise Exception("heartbeat_interval value should be either integer or decimal")
 		if val is not None and 'heartbeat' not in self.lines:
-			raise Exception('an only set heartbeat_interval when generate heartbeat')
-		return val
+			raise Exception("Only set heartbeat_interval when generate heartbeat")
+		self._heartbeat_interval = val
 
 	@property
 	def access_interval(self):
 		return self._access_interval
 
+	@access_interval.setter
+	def access_interval(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception("access_interval should be a list")
+		if len(val) != 2:
+			raise Exception("access_interval should be a list containing 2 elements")
+		if type(val[0]) != type(1) and type(val[0]) != type(0.5):
+			raise Exception("access_interval[0] should be either integer or decimal")
+		if type(val[1]) != type(1) and type(val[1]) != type(0.5):
+			raise Exception("access_interval[1] should be either integer or decimal")
+		if val[0] >= val[1]:
+			raise Exception("access_interval[0] should be smaller than access_interval[1]")
+		self._access_interval = val
+
 	@property
 	def mode(self):
 		return self._mode
 
+	@mode.setter
+	def mode(self, val):
+		if val not in ['uniform', 'push', 'spike']:
+			raise Exception("Unrecognized mode")
+
 	@property
 	def out_format(self):
 		return self._out_format
+
+	@out_format.setter
+	def out_format(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception("out_format should be a list")
+		if len(val) == 0:
+			raise Exception("Should select at least 1 output format")
+		out_format_set = set(val)
+		if not out_format_set.issubset(set(['stdout', 'log', 'gzip'])):
+			raise Exception("Unsupported output format")
+		self._out_format = val
 
 	@property
 	def out_log(self):
@@ -212,37 +248,6 @@ class apache_gen(object):
 			yield from asyncio.sleep(sleep_time)
 
 
-	#def assign_lines(self, lines):
-	#	lines_set = set(lines)
-	#	lines_full_set = set(self.lines_full)
-
-	#	if not lines_set.issubset(lines_full_set):
-	#		raise Exception("Unsupported line types.")
-	#	if len(lines_set) != len(lines):
-	#		raise Exception("Duplicated line types.")
-	#	return lines
-
-
-	#def assign_methods(self, methods):
-	#	methods_set = set(methods)
-	#	methods_full_set = set(['GET', 'POST', 'PUT', 'DELETE'])
-
-	#	if not methods_set.issubset(methods_full_set):
-	#		raise Exception("Unsupported method types.")
-	#	if len(methods_set) != len(methods):
-	#		raise Exception("Duplicated method types.")
-	#	return methods
-
-
-	#def assign_methods_p(self, methods_p):
-	#	if len(methods_p) != len(self._methods):
-	#		raise Exception("Length of methods_p doesn't equal length of methods.")
-	#	if abs(1-sum(methods_p)) > 0.01:
-	#		raise Exception("Sum of methods_p must equals 1.")
-	#	for x in methods_p:
-	#		if x < 0 or x > 1:
-	#			raise Exception("All members of methods_p must be in the range of 0 to 1 ")	
-	#	return methods_p
 	
 
 	def output_access(self, ip, user_identifier, user_id, t, msg, code, size):

@@ -70,6 +70,67 @@ def test_attr_forever():
 	assert str(error_info.value) == "forever must be either True or False"
 
 
+def test_attr_heartbeat_interval():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.heartbeat_interval = '0.1'
+	assert str(error_info.value) == "heartbeat_interval value should be either integer or decimal"
+
+	with pytest.raises(Exception) as error_info:
+		gen.lines = ['access']
+		gen.heartbeat_interval = 0.1
+	assert str(error_info.value) == "Only set heartbeat_interval when generate heartbeat"
+	
+
+def test_attr_access_interval():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = 1
+	assert str(error_info.value) == "access_interval should be a list"
+	
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = set([1,2])
+	assert str(error_info.value) == "access_interval should be a list"
+
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = [1]
+	assert str(error_info.value) == "access_interval should be a list containing 2 elements"
+
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = ['1', 2]
+	assert str(error_info.value) == "access_interval[0] should be either integer or decimal"
+
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = [1, '2']
+	assert str(error_info.value) == "access_interval[1] should be either integer or decimal"
+
+	with pytest.raises(Exception) as error_info:
+		gen.access_interval = [2, 1]
+	assert str(error_info.value) == "access_interval[0] should be smaller than access_interval[1]"
+
+
+def test_attr_mode():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.mode = 'drama'
+	assert str(error_info.value) == "Unrecognized mode"
+
+
+def test_attr_out_format():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.out_format = 'log'
+	assert str(error_info.value) == "out_format should be a list"
+
+	with pytest.raises(Exception) as error_info:
+		gen.out_format = []
+	assert str(error_info.value) == "Should select at least 1 output format"
+	
+	with pytest.raises(Exception) as error_info:
+		gen.out_format = ['stdout', 'cat']
+	assert str(error_info.value) == "Unsupported output format"
+
+
 ##########################################
 #####
 #####   Test 
