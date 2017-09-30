@@ -16,7 +16,7 @@ def test_attr_lines():
 	gen = apache_gen()
 	with pytest.raises(Exception) as error_info:
 		gen.lines = set('access')
-	assert str(error_info.value) == 'lines_gen should be a list.'
+	assert str(error_info.value) == 'lines should be a list.'
 
 	with pytest.raises(Exception) as error_info:
 		gen.lines = ['whatever']
