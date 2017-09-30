@@ -16,26 +16,26 @@ class apache_gen(object):
 	def __init__(self, out_path='./apache.log', out_format=['stdout', 'log'], lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
 		# Assign the lines to generate	
 		self._lines_full = ['heartbeat', 'access']
-		self.lines_gen = [self.heartbeat_lines(), self.access_lines()]
-		self.lines = self.assign_lines(lines)
+		self._lines_gen = [self.heartbeat_lines(), self.access_lines()]
+		self._lines = self.assign_lines(lines)
 		# Assign the http methods to generate	
-		self.methods = self.assign_methods(methods)
+		self._methods = self.assign_methods(methods)
 		# Assign the methods distribution
-		self.methods_p = self.assign_methods_p(methods_p)
+		self._methods_p = self.assign_methods_p(methods_p)
 		# Run forever or not
-		self.forever = forever
+		self._forever = forever
 		# Total # of logs to generate
-		self.count = count
+		self._count = count
 		# Assign the intervals
-		self.heartbeat_interval = heartbeat_interval
-		self.access_interval = access_interval
+		self._heartbeat_interval = heartbeat_interval
+		self._access_interval = access_interval
 		# Assign the generator mode
-		self.mode = mode
+		self._mode = mode
 
 		# Assign the output format
-		self.out_format = out_format
+		self._out_format = out_format
 		# Assign the output path
-		self.out_log = out_path
+		self._out_log = out_path
 		if 'log' in self.out_format or 'gzip' in self.out_format:
 			self.f_log = open(self.out_log, 'w')
 		#self.out_gz
@@ -44,6 +44,50 @@ class apache_gen(object):
 	@property
 	def lines_full(self):
 		return self._lines_full
+
+	@property
+	def lines_gen(self):
+		return self._lines_gen
+
+	@property
+	def lines(self):
+		return self._lines
+
+	@property
+	def methods(self):
+		return self._methods
+
+	@property
+	def methods_p(self):
+		return self._methods_p
+
+	@property
+	def forever(self):
+		return self._forever
+
+	@property
+	def count(self):
+		return self._count
+
+	@property
+	def heartbeat_interval(self):
+		return self._heartbeat_interval
+
+	@property
+	def access_interval(self):
+		return self._access_interval
+
+	@property
+	def mode(self):
+		return self._mode
+
+	@property
+	def out_format(self):
+		return self._out_format
+
+	@property
+	def out_log(self):
+		return self._out_log
 
 
 	def run(self):
