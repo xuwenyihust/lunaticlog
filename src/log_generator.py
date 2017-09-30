@@ -181,7 +181,7 @@ class apache_gen(object):
 
 
 	def assign_methods_p(self, methods_p):
-		if len(methods_p) != len(self.methods):
+		if len(methods_p) != len(self._methods):
 			raise Exception("Length of methods_p doesn't equal length of methods.")
 		if abs(1-sum(methods_p)) > 0.01:
 			raise Exception("Sum of methods_p must equals 1.")
