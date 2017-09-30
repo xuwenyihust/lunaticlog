@@ -15,31 +15,131 @@ class apache_gen(object):
 
 	def __init__(self, out_path='./apache.log', out_format=['stdout', 'log'], lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
 		# Assign the lines to generate	
-		self.lines_full = ['heartbeat', 'access']
-		self.lines_gen = [self.heartbeat_lines(), self.access_lines()]
-		self.lines = self.assign_lines(lines)
+		self._lines_full = ['heartbeat', 'access']
+		self._lines_gen = [self.heartbeat_lines(), self.access_lines()]
+		self._lines = lines
 		# Assign the http methods to generate	
-		self.methods = self.assign_methods(methods)
+		self._methods = methods
 		# Assign the methods distribution
-		self.methods_p = self.assign_methods_p(methods_p)
+		self._methods_p = methods_p
 		# Run forever or not
-		self.forever = forever
+		self._forever = forever
 		# Total # of logs to generate
-		self.count = count
+		self._count = count
 		# Assign the intervals
-		self.heartbeat_interval = heartbeat_interval
-		self.access_interval = access_interval
+		self._heartbeat_interval = heartbeat_interval
+		self._access_interval = access_interval
 		# Assign the generator mode
-		self.mode = mode
+		self._mode = mode
 
 		# Assign the output format
-		self.out_format = out_format
+		self._out_format = out_format
 		# Assign the output path
-		self.out_log = out_path
+		self._out_log = out_path
 		if 'log' in self.out_format or 'gzip' in self.out_format:
 			self.f_log = open(self.out_log, 'w')
 		#self.out_gz
 
+
+	@property
+	def lines_full(self):
+		return self._lines_full
+
+	@lines_full.setter
+	def lines_full(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception('lines_full should be a list.')
+		self._lines_full = val
+
+	@property
+	def lines_gen(self):
+		return self._lines_gen
+
+	@lines_gen.setter
+	def lines_gen(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception('lines_gen should be a list.')
+		self._lines_gen = val
+
+	@property
+	def lines(self):
+		return self._lines
+
+	@lines.setter
+	def lines(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception('lines should be a list.')
+		lines_set = set(val)
+		lines_full_set = set(self.lines_full)
+		if not lines_set.issubset(lines_full_set):
+			raise Exception("Unsupported line types.")
+		if len(lines_set) != len(val):
+			raise Exception("Duplicated line types.")
+		return val
+
+	@property
+	def methods(self):
+		return self._methods
+
+	@methods.setter
+	def methods(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception('methods should be a list.')
+		methods_set = set(val)
+		methods_full_set = set(['GET', 'POST', 'PUT', 'DELETE'])
+		if not methods_set.issubset(methods_full_set):
+			raise Exception("Unsupported method types.")
+		if len(methods_set) != len(val):
+			raise Exception("Duplicated method types.")
+		return val
+
+	@property
+	def methods_p(self):
+		return self._methods_p
+
+	@methods_p.setter
+	def methods_p(self, val):
+		if type(val) != type([1,2,3]):
+			raise Exception('methods_p should be a list.')
+		if abs(1-sum(val)) > 0.01:
+			raise Exception("Sum of methods_p must equals 1.")
+		for x in val:
+			if x < 0 or x > 1:
+				raise Exception("All members of methods_p must be in the range of 0 to 1 ")	
+		return val
+
+	@property
+	def forever(self):
+		return self._forever
+
+	@forever.setter
+	def forever(self, val):
+		if val not in [True, False]:
+			raise Exception("forever must be either True or False")
+
+	@property
+	def count(self):
+		return self._count
+
+	@property
+	def heartbeat_interval(self):
+		return self._heartbeat_interval
+
+	@property
+	def access_interval(self):
+		return self._access_interval
+
+	@property
+	def mode(self):
+		return self._mode
+
+	@property
+	def out_format(self):
+		return self._out_format
+
+	@property
+	def out_log(self):
+		return self._out_log
 
 
 	def run(self):
@@ -110,37 +210,37 @@ class apache_gen(object):
 			yield from asyncio.sleep(sleep_time)
 
 
-	def assign_lines(self, lines):
-		lines_set = set(lines)
-		lines_full_set = set(self.lines_full)
+	#def assign_lines(self, lines):
+	#	lines_set = set(lines)
+	#	lines_full_set = set(self.lines_full)
 
-		if not lines_set.issubset(lines_full_set):
-			raise Exception("Unsupported line types.")
-		if len(lines_set) != len(lines):
-			raise Exception("Duplicated line types.")
-		return lines
-
-
-	def assign_methods(self, methods):
-		methods_set = set(methods)
-		methods_full_set = set(['GET', 'POST', 'PUT', 'DELETE'])
-
-		if not methods_set.issubset(methods_full_set):
-			raise Exception("Unsupported method types.")
-		if len(methods_set) != len(methods):
-			raise Exception("Duplicated method types.")
-		return methods
+	#	if not lines_set.issubset(lines_full_set):
+	#		raise Exception("Unsupported line types.")
+	#	if len(lines_set) != len(lines):
+	#		raise Exception("Duplicated line types.")
+	#	return lines
 
 
-	def assign_methods_p(self, methods_p):
-		if len(methods_p) != len(self.methods):
-			raise Exception("Length of methods_p doesn't equal length of methods.")
-		if abs(1-sum(methods_p)) > 0.01:
-			raise Exception("Sum of methods_p must equals 1.")
-		for x in methods_p:
-			if x < 0 or x > 1:
-				raise Exception("All members of methods_p must be in the range of 0 to 1 ")	
-		return methods_p
+	#def assign_methods(self, methods):
+	#	methods_set = set(methods)
+	#	methods_full_set = set(['GET', 'POST', 'PUT', 'DELETE'])
+
+	#	if not methods_set.issubset(methods_full_set):
+	#		raise Exception("Unsupported method types.")
+	#	if len(methods_set) != len(methods):
+	#		raise Exception("Duplicated method types.")
+	#	return methods
+
+
+	#def assign_methods_p(self, methods_p):
+	#	if len(methods_p) != len(self._methods):
+	#		raise Exception("Length of methods_p doesn't equal length of methods.")
+	#	if abs(1-sum(methods_p)) > 0.01:
+	#		raise Exception("Sum of methods_p must equals 1.")
+	#	for x in methods_p:
+	#		if x < 0 or x > 1:
+	#			raise Exception("All members of methods_p must be in the range of 0 to 1 ")	
+	#	return methods_p
 	
 
 	def output_access(self, ip, user_identifier, user_id, t, msg, code, size):
