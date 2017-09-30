@@ -71,6 +71,8 @@ The scripts to plot these bandwidth charts can be found under `./scripts`.
 
 ### apache_gen Class
 
+**Instantiation**
+
 ```python
 from lunaticlog import apache
 
