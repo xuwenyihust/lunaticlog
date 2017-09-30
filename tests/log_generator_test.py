@@ -1,14 +1,70 @@
 import pytest
+from .. import log_gen
 from .. import apache_gen
 import asyncio
 from asyncio import coroutine
 import os
 import re
 
+##########################################
+#####
+#####	Test Abstract Class
+#####
+##########################################
+def test_abstract_class():
+
+	try:
+		gen = log_gen()
+		assert False, 'Abstract class instance created!'
+	except TypeError:
+		pass
+
+	try:
+		class one_log_gen(log_gen):
+			@property
+			def methods(self):
+				pass
+			@property
+			def methods_p(self):
+				pass
+			@property
+			def mode(self):
+				pass
+			@property
+			def out_format(self):
+				pass
+			def run(self):
+				pass
+		gen = one_log_gen()
+		assert False, "Abstract class property not implemented" 
+	except TypeError:
+		pass
+
+	try:
+		class one_log_gen(log_gen):
+			@property
+			def lines(self):
+				pass
+			@property
+			def method(self):
+				pass
+			@property
+			def methods_p(self):
+				pass
+			@property
+			def mode(self):
+				pass
+			@property
+			def out_format(self):
+				pass
+		gen = one_log_gen()
+		assert False, "Abstract class method not implemented"
+	except TypeError:
+		pass
 
 ##########################################
 #####
-#####	Test Attribute Setting
+#####	Test Apache Attribute Setting
 #####
 ##########################################
 

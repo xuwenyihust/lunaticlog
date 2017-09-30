@@ -8,10 +8,46 @@ import datetime
 from asyncio import coroutine
 import numpy
 from subprocess import check_call
+import abc
 
+#################################
+##
+##  Abstract Base Log Generator
+##
+#################################
+class log_gen(metaclass=abc.ABCMeta):
 
-# Apache Access Logs
-class apache_gen(object):
+	@abc.abstractproperty
+	def lines(self):
+		pass
+
+	@abc.abstractproperty
+	def methods(self):
+		pass
+
+	@abc.abstractproperty
+	def methods_p(self):
+		pass
+
+	@abc.abstractproperty
+	def mode(self):
+		pass
+
+	@abc.abstractproperty
+	def out_format(self):
+		pass
+
+	@abc.abstractmethod
+	def run(self):
+		pass
+		
+
+#################################
+##
+## Apache Access Log Generator
+##
+#################################
+class apache_gen(log_gen):
 
 	def __init__(self, out_path='./apache.log', out_format=['stdout', 'log'], lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
 		# Assign the lines to generate	
