@@ -30,7 +30,7 @@ def test_attr_lines():
 def test_attr_methods():
 	gen = apache_gen()
 	with pytest.raises(Exception) as error_info:
-		gen.methods = set('GET', 'POP', 'PUT', 'DELETE')
+		gen.methods = set(['GET', 'POP', 'PUT', 'DELETE'])
 	assert str(error_info.value) == 'methods should be a list.'
 
 	with pytest.raises(Exception) as error_info:
@@ -45,23 +45,29 @@ def test_attr_methods():
 def test_attr_methods_p():
 	gen = apache_gen()
 	with pytest.raises(Exception) as error_info:
-		gen.methods_p = set(0.6)
+		gen.methods_p = set([0.6, 0.4])	
 	assert str(error_info.value) == 'methods_p should be a list.'
 
 	with pytest.raises(Exception) as error_info:
-		gen.methods = ['GET']
+		gen.methods = ['GET', 'POST', 'PUT', 'DELETE']
 		gen.methods_p = [0.5, 0.5]
 	assert str(error_info.value) == "Length of methods_p doesn't equal length of methods." 
-	
+
 	with pytest.raises(Exception) as error_info:
-		gen.methods = ['GET', 'POST']
-		gen.methods_p = [0.6, 0.7]
+		gen.methods = ['GET', 'POST', 'PUT', 'DELETE']
+		gen.methods_p = [0.6, 0.7, 0.1, 0.1]
 	assert str(error_info.value) == "Sum of methods_p must equals 1."
 
 	with pytest.raises(Exception) as error_info:
-		gen.methods_p = [-1, 2]
+		gen.methods_p = [-1, 1, 0.5, 0.5]
 	assert str(error_info.value) == "All members of methods_p must be in the range of 0 to 1 "
 
+
+def test_attr_forever():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.forever = 'AHA'
+	assert str(error_info.value) == "forever must be either True or False"
 
 
 ##########################################
