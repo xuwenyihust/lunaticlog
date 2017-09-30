@@ -1,5 +1,5 @@
 import pytest
-from .. import apache
+from .. import apache_gen
 import asyncio
 from asyncio import coroutine
 import os
@@ -7,7 +7,7 @@ import re
 
 
 def test_assign_lines():
-	gen = apache()
+	gen = apache_gen()
 	with pytest.raises(Exception) as error_info:
 		gen.assign_lines(['access', 'access'])		
 	assert str(error_info.value) == "Duplicated line types."
@@ -18,7 +18,7 @@ def test_assign_lines():
 
 
 def test_assign_methods():
-	gen = apache()
+	gen = apache_gen()
 	with pytest.raises(Exception) as error_info:
 		gen.assign_methods(['GET', 'POP', 'PUT', 'DELETE'])
 	assert str(error_info.value) == "Unsupported method types."
@@ -29,7 +29,7 @@ def test_assign_methods():
 
 
 def test_assign_methods_p():
-	gen = apache()
+	gen = apache_gen()
 	with pytest.raises(Exception) as error_info:
 		gen.methods = ['GET']
 		gen.assign_methods_p([0.5, 0.5])
@@ -45,7 +45,7 @@ def test_assign_methods_p():
 	assert str(error_info.value) == "All members of methods_p must be in the range of 0 to 1 "
 
 def test_get_time_field():
-	gen = apache()
+	gen = apache_gen()
 	try:
 		time_field = gen.get_time_field().split()
 		time_field0 = time_field[0]
@@ -57,7 +57,7 @@ def test_get_time_field():
 
 
 def test_get_ip():
-	gen = apache()
+	gen = apache_gen()
 	try:
 		ip = gen.get_ip()
 		assert len(ip.split('.')) == 4
@@ -68,7 +68,7 @@ def test_get_ip():
 
 
 def test_get_user_identifier():
-	gen = apache()
+	gen = apache_gen()
 	try:
 		user_identifier = gen.get_user_identifier()
 		assert user_identifier == '-'
@@ -77,7 +77,7 @@ def test_get_user_identifier():
 
 
 def test_get_user_id():
-	gen = apache()
+	gen = apache_gen()
 	try:
 		user_id = gen.get_user_id()
 		assert user_id == 'frank'
@@ -86,7 +86,7 @@ def test_get_user_id():
 
 
 def test_get_method():
-	gen = apache()
+	gen = apache_gen()
 	try:
 		method = gen.get_method()
 		assert method in ['GET', 'POST', 'PUT', 'DELETE']
@@ -95,7 +95,7 @@ def test_get_method():
 
 
 def test_get_resource():
-	gen = apache()
+	gen = apache_gen()
 	try:
 		resource = gen.get_resource()
 		assert resource == '/apache_pb.gif'
@@ -104,7 +104,7 @@ def test_get_resource():
 
 
 def test_get_version():
-	gen = apache()
+	gen = apache_gen()
 	try:
 		version = gen.get_version()
 		assert version == 'HTTP/1.0'
@@ -113,7 +113,7 @@ def test_get_version():
 
 
 def test_get_msg():
-	gen = apache()
+	gen = apache_gen()
 	try:
 		msg = gen.get_msg('a', 'b', 'c')
 		assert msg == 'a b c'
@@ -122,7 +122,7 @@ def test_get_msg():
 
 
 def test_get_code():
-	gen = apache()
+	gen = apache_gen()
 	try:
 		code = gen.get_code()
 		assert code == '200'
@@ -131,7 +131,7 @@ def test_get_code():
 
 
 def test_get_size():
-	gen = apache()
+	gen = apache_gen()
 	try:
 		size = gen.get_size()
 		assert size in range(1024, 10241)
@@ -140,7 +140,7 @@ def test_get_size():
 
 
 def test_heartbeat_lines_format():
-	gen = apache(out_path='./test_heartbeat_lines_format.txt', lines=['heartbeat'], forever=False, count=1)
+	gen = apache_gen(out_path='./test_heartbeat_lines_format.txt', lines=['heartbeat'], forever=False, count=1)
 	gen.run()
 	
 	try:
@@ -160,7 +160,7 @@ def test_heartbeat_lines_format():
 
 	
 def	test_access_lines_format():
-	gen = apache(out_path='./test_access_lines_format.txt', lines=['access'], forever=False, count=1)
+	gen = apache_gen(out_path='./test_access_lines_format.txt', lines=['access'], forever=False, count=1)
 	gen.run()
 
 	try:
@@ -179,7 +179,7 @@ def	test_access_lines_format():
 
 # Test param: lines
 '''def test_lines_control():
-	gen = apache(out_path='./test_lines_control.txt', lines=['heartbeat', 'access'], methods=['GET', 'PUT', 'POST', 'DELETE'], forever=False, count=10)
+	gen = apache_gen(out_path='./test_lines_control.txt', lines=['heartbeat', 'access'], methods=['GET', 'PUT', 'POST', 'DELETE'], forever=False, count=10)
 	gen.run()
 
 	lines_li = set()
@@ -206,7 +206,7 @@ def	test_access_lines_format():
 # Test param: methods
 def test_access_lines_method():
 	# Test GET generation
-	gen = apache(out_path='./test_access_lines_method.txt', lines=['access'], methods=['GET'], forever=False, count=3)
+	gen = apache_gen(out_path='./test_access_lines_method.txt', lines=['access'], methods=['GET'], forever=False, count=3)
 	gen.run()
 
 	try:
@@ -223,7 +223,7 @@ def test_access_lines_method():
 		assert False
 
 	# Test PUT generation
-	gen = apache(out_path='./test_access_lines_method.txt', lines=['access'], methods=['PUT'], forever=False, count=3)
+	gen = apache_gen(out_path='./test_access_lines_method.txt', lines=['access'], methods=['PUT'], forever=False, count=3)
 	gen.run()
 
 	try:
@@ -240,7 +240,7 @@ def test_access_lines_method():
 		assert False
 
 	# Test POST generation
-	gen = apache(out_path='./test_access_lines_method.txt', lines=['access'], methods=['POST'], forever=False, count=3)
+	gen = apache_gen(out_path='./test_access_lines_method.txt', lines=['access'], methods=['POST'], forever=False, count=3)
 	gen.run()
 
 	try:
@@ -256,7 +256,7 @@ def test_access_lines_method():
 		assert False
 
 	# Test DELETE generation
-	gen = apache(out_path='./test_access_lines_method.txt', lines=['access'], methods=['DELETE'], forever=False, count=3)
+	gen = apache_genout_path='./test_access_lines_method.txt', lines=['access'], methods=['DELETE'], forever=False, count=3)
 	gen.run()
 
 	try:
@@ -273,7 +273,7 @@ def test_access_lines_method():
 
 # Test param: methods_p
 def test_access_lines_method_dist():
-	gen = apache(out_path='./test_access_lines_method_dist.txt', lines=['access'], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p=[1.0, 0, 0, 0], forever=False, count=3)
+	gen = apache_gen(out_path='./test_access_lines_method_dist.txt', lines=['access'], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p=[1.0, 0, 0, 0], forever=False, count=3)
 	gen.run()
 
 	try:
