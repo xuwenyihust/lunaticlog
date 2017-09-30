@@ -6,15 +6,25 @@ import os
 import re
 
 
-#def test_assign_lines():
-#	gen = apache_gen()
-#	with pytest.raises(Exception) as error_info:
-#		gen.assign_lines(['access', 'access'])		
-#	assert str(error_info.value) == "Duplicated line types."
+##########################################
+#####
+#####	Test Attribute Setting
+#####
+##########################################
 
-#	with pytest.raises(Exception) as error_info:
-#		gen.assign_lines(['whatever'])
-#	assert str(error_info.value) == "Unsupported line types."
+def test_attr_lines():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.lines = set('access')
+	assert str(error_info.value) == 'lines_gen should be a list.'
+
+	with pytest.raises(Exception) as error_info:
+		gen.lines = ['whatever']
+	assert str(error_info.value) == "Unsupported line types."
+
+	with pytest.raises(Exception) as error_info:
+		gen.lines = ['access', 'access']
+	assert str(error_info.value) == "Duplicated line types."
 
 
 #def test_assign_methods():

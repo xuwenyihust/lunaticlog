@@ -45,21 +45,21 @@ class apache_gen(object):
 	def lines_full(self):
 		return self._lines_full
 
-	@lines_full.setter
-	def lines_full(self, val):
-		if type(val) != type([1,2,3]):
-			raise Exception('lines_full should be a list.')
-		self._lines_full = val
+	#@lines_full.setter
+	#def lines_full(self, val):
+	#	if type(val) != type([1,2,3]):
+	#		raise Exception('lines_full should be a list.')
+	#	self._lines_full = val
 
 	@property
 	def lines_gen(self):
 		return self._lines_gen
 
-	@lines_gen.setter
-	def lines_gen(self, val):
-		if type(val) != type([1,2,3]):
-			raise Exception('lines_gen should be a list.')
-		self._lines_gen = val
+	#@lines_gen.setter
+	#def lines_gen(self, val):
+	#	if type(val) != type([1,2,3]):
+	#		raise Exception('lines_gen should be a list.')
+	#	self._lines_gen = val
 
 	@property
 	def lines(self):
@@ -130,7 +130,7 @@ class apache_gen(object):
 	# heartbeat must be one of the methods to be generated
 	@heartbeat_interval.setter
 	def heartbeat_interval(self, val):
-		if val is not None and 'heartbeat' not in self.lines
+		if val is not None and 'heartbeat' not in self.lines:
 			raise Exception('an only set heartbeat_interval when generate heartbeat')
 		return val
 
