@@ -21,7 +21,7 @@ class apache_gen(object):
 		# Assign the http methods to generate	
 		self._methods = self.assign_methods(methods)
 		# Assign the methods distribution
-		self._methods_p = self.assign_methods_p(methods_p)
+		self._methods_p = methods_p
 		# Run forever or not
 		self._forever = forever
 		# Total # of logs to generate
@@ -180,15 +180,15 @@ class apache_gen(object):
 		return methods
 
 
-	def assign_methods_p(self, methods_p):
-		if len(methods_p) != len(self._methods):
-			raise Exception("Length of methods_p doesn't equal length of methods.")
-		if abs(1-sum(methods_p)) > 0.01:
-			raise Exception("Sum of methods_p must equals 1.")
-		for x in methods_p:
-			if x < 0 or x > 1:
-				raise Exception("All members of methods_p must be in the range of 0 to 1 ")	
-		return methods_p
+	#def assign_methods_p(self, methods_p):
+	#	if len(methods_p) != len(self._methods):
+	#		raise Exception("Length of methods_p doesn't equal length of methods.")
+	#	if abs(1-sum(methods_p)) > 0.01:
+	#		raise Exception("Sum of methods_p must equals 1.")
+	#	for x in methods_p:
+	#		if x < 0 or x > 1:
+	#			raise Exception("All members of methods_p must be in the range of 0 to 1 ")	
+	#	return methods_p
 	
 
 	def output_access(self, ip, user_identifier, user_id, t, msg, code, size):

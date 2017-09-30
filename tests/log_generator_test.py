@@ -28,21 +28,21 @@ def test_assign_methods():
 	assert str(error_info.value) == "Duplicated method types."
 
 
-def test_assign_methods_p():
-	gen = apache_gen()
-	with pytest.raises(Exception) as error_info:
-		gen.methods = ['GET']
-		gen.assign_methods_p([0.5, 0.5])
-	assert str(error_info.value) == "Length of methods_p doesn't equal length of methods."	
+#def test_assign_methods_p():
+#	gen = apache_gen()
+#	with pytest.raises(Exception) as error_info:
+#		gen.methods = ['GET']
+#		gen.assign_methods_p([0.5, 0.5])
+#	assert str(error_info.value) == "Length of methods_p doesn't equal length of methods."	
 
-	with pytest.raises(Exception) as error_info:
-		gen.methods = ['GET', 'POST']
-		gen.assign_methods_p([0.6, 0.7])
-	assert str(error_info.value) == "Sum of methods_p must equals 1."
+#	with pytest.raises(Exception) as error_info:
+#		gen.methods = ['GET', 'POST']
+#		gen.assign_methods_p([0.6, 0.7])
+#	assert str(error_info.value) == "Sum of methods_p must equals 1."
 
-	with pytest.raises(Exception) as error_info:
-		gen.assign_methods_p([-1, 2])
-	assert str(error_info.value) == "All members of methods_p must be in the range of 0 to 1 "
+#	with pytest.raises(Exception) as error_info:
+#		gen.assign_methods_p([-1, 2])
+#	assert str(error_info.value) == "All members of methods_p must be in the range of 0 to 1 "
 
 def test_get_time_field():
 	gen = apache_gen()
