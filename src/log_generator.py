@@ -40,26 +40,17 @@ class apache_gen(object):
 			self.f_log = open(self.out_log, 'w')
 		#self.out_gz
 
-
+	# Predefined lines_full
+	# ['heartbeat', 'access']
 	@property
 	def lines_full(self):
 		return self._lines_full
 
-	#@lines_full.setter
-	#def lines_full(self, val):
-	#	if type(val) != type([1,2,3]):
-	#		raise Exception('lines_full should be a list.')
-	#	self._lines_full = val
-
+	# Predefined lines_gen
+	# [self.heartbeat_lines(), self.access_lines()] 
 	@property
 	def lines_gen(self):
 		return self._lines_gen
-
-	#@lines_gen.setter
-	#def lines_gen(self, val):
-	#	if type(val) != type([1,2,3]):
-	#		raise Exception('lines_gen should be a list.')
-	#	self._lines_gen = val
 
 	@property
 	def lines(self):
