@@ -80,21 +80,21 @@ log_gen.run()
 
 **Arguments**
 
-* `out_path`
+* `out_path`: path of output logs
 
-* `out_format`
+* `out_format`: format of output logs
 
-* `lines`
+* `lines`:  kinds of log lines to output
 
-* `heartbeat_interval`
+* `heartbeat_interval`: interval of heartbeat lines
 
-* `access_interval`
+* `access_interval`:  interval of access lines
 
-* `methods`
+* `methods`:  HTTP log methods to generate
 
-* `methods_p`
+* `methods_p`:  corresponding distribution of HTTP log methods
 
-* `mode`
+* `mode`: log traffic mode
 
 ## License
 See the LICENSE file for license rights and limitations (MIT).
