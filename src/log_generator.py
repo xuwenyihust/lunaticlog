@@ -17,9 +17,9 @@ class apache_gen(object):
 		# Assign the lines to generate	
 		self._lines_full = ['heartbeat', 'access']
 		self._lines_gen = [self.heartbeat_lines(), self.access_lines()]
-		self._lines = self.assign_lines(lines)
+		self._lines = lines
 		# Assign the http methods to generate	
-		self._methods = self.assign_methods(methods)
+		self._methods = methods
 		# Assign the methods distribution
 		self._methods_p = methods_p
 		# Run forever or not
@@ -158,26 +158,26 @@ class apache_gen(object):
 			yield from asyncio.sleep(sleep_time)
 
 
-	def assign_lines(self, lines):
-		lines_set = set(lines)
-		lines_full_set = set(self.lines_full)
+	#def assign_lines(self, lines):
+	#	lines_set = set(lines)
+	#	lines_full_set = set(self.lines_full)
 
-		if not lines_set.issubset(lines_full_set):
-			raise Exception("Unsupported line types.")
-		if len(lines_set) != len(lines):
-			raise Exception("Duplicated line types.")
-		return lines
+	#	if not lines_set.issubset(lines_full_set):
+	#		raise Exception("Unsupported line types.")
+	#	if len(lines_set) != len(lines):
+	#		raise Exception("Duplicated line types.")
+	#	return lines
 
 
-	def assign_methods(self, methods):
-		methods_set = set(methods)
-		methods_full_set = set(['GET', 'POST', 'PUT', 'DELETE'])
+	#def assign_methods(self, methods):
+	#	methods_set = set(methods)
+	#	methods_full_set = set(['GET', 'POST', 'PUT', 'DELETE'])
 
-		if not methods_set.issubset(methods_full_set):
-			raise Exception("Unsupported method types.")
-		if len(methods_set) != len(methods):
-			raise Exception("Duplicated method types.")
-		return methods
+	#	if not methods_set.issubset(methods_full_set):
+	#		raise Exception("Unsupported method types.")
+	#	if len(methods_set) != len(methods):
+	#		raise Exception("Duplicated method types.")
+	#	return methods
 
 
 	#def assign_methods_p(self, methods_p):
