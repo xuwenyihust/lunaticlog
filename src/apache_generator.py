@@ -17,22 +17,26 @@ from . import log_gen
 #################################
 class apache_gen(log_gen):
 
-	def __init__(self, out_path='./apache.log', out_format=['stdout', 'log'], lines=['heartbeat', 'access'], heartbeat_interval=0.1, access_interval=[0.1, 2], methods=['GET', 'POST', 'PUT', 'DELETE'], methods_p = [0.7, 0.1, 0.1, 0.1], mode='uniform', forever=True, count=1):
+	def __init__(self, out_path='./apache.log', out_format=['stdout', 'log'], mode='uniform', forever=True, count=1):
+		# Load configuration data
+		config_file = './config/apache_gen.json'
+		with open(config_file, 'r') as f:
+			self.config = json.load(f)
 		# Assign the lines to generate	
 		self._lines_full = ['heartbeat', 'access']
 		self._lines_gen = [self.heartbeat_lines(), self.access_lines()]
-		self._lines = lines
+		self._lines = self.config["lines"]
 		# Assign the http methods to generate	
-		self._methods = methods
+		self._methods = self.config["methods"]
 		# Assign the methods distribution
-		self._methods_p = methods_p
+		self._methods_p = self.config["methods_p"]
 		# Run forever or not
 		self._forever = forever
 		# Total # of logs to generate
 		self._count = count
 		# Assign the intervals
-		self._heartbeat_interval = heartbeat_interval
-		self._access_interval = access_interval
+		self._heartbeat_interval = self.config["heartbeat_interval"]
+		self._access_interval = self.config["access_interval"]
 		# Assign the generator mode
 		self._mode = mode
 
@@ -57,7 +61,7 @@ class apache_gen(log_gen):
 		return self._lines_gen
 
 	@property
-	def lines(self):
+	def lines(self):	
 		return self._lines
 
 	@lines.setter
@@ -269,7 +273,8 @@ class apache_gen(log_gen):
 
 	# Generate the user_id field for the access line
 	def get_user_id(self):
-		return 'frank'
+		user_id_li = self.config["user_id"]
+		return user_id_li[random.randint(0, len(user_id_li)-1)]
 
 	# Generate the HTTP method field for the access line
 	def get_method(self):
@@ -277,11 +282,11 @@ class apache_gen(log_gen):
 
 	# Generate the resource field for the access line
 	def get_resource(self):
-		return '/apache_pb.gif'
+		return self.config["resource"]
 	
 	# Generate the version field for the access line
 	def get_version(self):
-		return 'HTTP/1.0'
+		return self.config["version"]
 
 	# Generate the message field for the access line
 	def get_msg(self, method, resource, version):
@@ -289,7 +294,7 @@ class apache_gen(log_gen):
 
 	# Generate the HTTP code field for the access line
 	def get_code(self):
-		return '200'
+		return self.config["code"]
 
 	# Generate the message size field for the access line
 	def get_size(self):

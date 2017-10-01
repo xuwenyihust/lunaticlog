@@ -1,0 +1,11 @@
+{
+	"lines": ["heartbeat" ,"access"],
+	"heartbeat_interval": 0.1,
+	"access_interval": [0.1, 2],
+	"user_id": ["frank", "james", "john", "robert", "michael", "william", "david", "richard", "charles", "joseph", "thomas"],
+	"methods": ["GET", "POST", "PUT", "DELETE"],
+	"methods_p": [0.7,0.1,0.1,0.1],
+	"resource": "/apache_pb.gif",
+	"version": "HTTP/1.0",
+	"code": "200"
+}
