@@ -242,6 +242,7 @@ class apache_gen(log_gen):
 				self.count -= 1
 			yield from asyncio.sleep(self.heartbeat_interval)
 
+	# Output the heartbeat line (to stdout, file, ...)
 	def output_heartbeat(self, t):
 		string = '- - - [' + t + '] "' + 'HEARTBEAT" - -'
 		if 'stdout' in self.out_format:
@@ -249,6 +250,7 @@ class apache_gen(log_gen):
 		if 'log' in self.out_format:
 			self.f_log.write(string + '\n')
 
+	# Derive the timestamp from current time
 	def get_time_field(self):
 		return datetime.datetime.now().strftime('%d/%b/%Y:%H:%M:%S -0700')
 
@@ -256,26 +258,21 @@ class apache_gen(log_gen):
 	@coroutine
 	def access_lines(self):
 		while self.forever or self.count > 0:	
+			# Generate different fields in the access log
 			ip = self.get_ip()
 			user_identifier = self.get_user_identifier()
 			user_id = self.get_user_id()
 			t = self.get_time_field()
-
 			method = self.get_method()
-			#method = random.choice(self.methods)
-			#resource = self.resources[random.randint(0, len(self.resources)-1)]
 			resource = self.get_resource()
-			#version = self.versions[random.randint(0, len(self.versions)-1)]
 			version = self.get_version()
 			msg = self.get_msg(method, resource, version)
-			#code = numpy.random.choice(self.codes, p=self.codes_dist)
-			#code = '200'
+		
 			code = self.get_code()
-			#size = random.randint(1024, 10240)
 			size = self.get_size()
-			#self.log.info('%s %s %s [%s] "%s" %s %s', ip, user_identifier, user_id, t, msg, code, size)
+			# Output the generated access line	
 			self.output_access(ip, user_identifier, user_id, t, msg, code, size)
-
+			# Decrease the counter
 			if self.count > 0:
 				self.count -= 1
 
@@ -285,7 +282,7 @@ class apache_gen(log_gen):
 
 
 	
-
+	# Output the access line (to stdout, file, ...)
 	def output_access(self, ip, user_identifier, user_id, t, msg, code, size):
 		string = ip+' '+user_identifier+' '+user_id+' '+'['+t+'] "'+msg+'" '+code+' '+str(size)
 		if 'stdout' in self.out_format:
@@ -294,39 +291,39 @@ class apache_gen(log_gen):
 			self.f_log.write(string + '\n')
 
 
-
+	# Generate the ip field for the access line
 	def get_ip(self):
 		return '.'.join(str(random.randint(0, 255)) for i in range(4))
 
-
+	# Generate the user_identifier field for the access line
 	def get_user_identifier(self):
 		return '-'
 
-
+	# Generate the user_id field for the access line
 	def get_user_id(self):
 		return 'frank'
 
-
+	# Generate the HTTP method field for the access line
 	def get_method(self):
 		return numpy.random.choice(self.methods, p=self.methods_p)
 
-
+	# Generate the resource field for the access line
 	def get_resource(self):
 		return '/apache_pb.gif'
 	
-
+	# Generate the version field for the access line
 	def get_version(self):
 		return 'HTTP/1.0'
 
-
+	# Generate the message field for the access line
 	def get_msg(self, method, resource, version):
 		return method + " " + resource + " " + version
 
-
+	# Generate the HTTP code field for the access line
 	def get_code(self):
 		return '200'
 
-
+	# Generate the message size field for the access line
 	def get_size(self):
 		return random.randint(1024, 10240)
 
