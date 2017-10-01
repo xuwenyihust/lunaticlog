@@ -5,6 +5,7 @@ import asyncio
 from asyncio import coroutine
 import os
 import re
+import json
 
 ##########################################
 #####
@@ -228,9 +229,12 @@ def test_get_user_identifier():
 
 def test_get_user_id():
 	gen = apache_gen()
+	config_file = './config/apache_gen.json'
+	with open(config_file, 'r') as f:
+		config = json.load(f)
 	try:
 		user_id = gen.get_user_id()
-		assert user_id == 'frank'
+		assert user_id in config["user_id"]
 	except:
 		assert False
 
@@ -290,7 +294,8 @@ def test_get_size():
 
 
 def test_heartbeat_lines_format():
-	gen = apache_gen(out_path='./test_heartbeat_lines_format.txt', lines=['heartbeat'], forever=False, count=1)
+	gen = apache_gen(out_path='./test_heartbeat_lines_format.txt', forever=False, count=1)
+	gen.lines = ['heartbeat']
 	gen.run()
 	
 	try:
@@ -310,7 +315,8 @@ def test_heartbeat_lines_format():
 
 	
 def	test_access_lines_format():
-	gen = apache_gen(out_path='./test_access_lines_format.txt', lines=['access'], forever=False, count=1)
+	gen = apache_gen(out_path='./test_access_lines_format.txt', forever=False, count=1)
+	gen.lines = ['access']
 	gen.run()
 
 	try:
