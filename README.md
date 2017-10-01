@@ -74,7 +74,7 @@ The scripts to plot these bandwidth charts can be found under `./scripts`.
 **Instantiation**
 
 ```python
-from lunaticlog import apache
+from lunaticlog import apache_gen
 
 log_gen = apache_gen(out_path='./apache.log', lines=['heartbeat', 'access'])
 log_gen.run()
