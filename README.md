@@ -32,6 +32,9 @@ What kinds of log formats does it support now?
 
   `79a59df900b949e55d96a1e698fbacedfd6e09d98eacf8f8d5218e7cd47ef2be mybucket [06/Feb/2014:00:00:38 +0000] 192.0.2.3 79a59df900b949e55d96a1e698fbacedfd6e09d98eacf8f8d5218e7cd47ef2be 3E57427F3EXAMPLE REST.GET.VERSIONING - "GET /mybucket?versioning HTTP/1.1" 200 - 113 - 7 - "-" "S3Console/0.4" -`
 
+### Log Rotation
+Set attribute 'rotation_size' to rotate logs when current log file achieves the max size.
+
 ### Log Generation Mode
 The fate of lunaticlog is to create chaos to test your system. So it needs to generate various extreme cases, such as sudden traffic spikes.
 
