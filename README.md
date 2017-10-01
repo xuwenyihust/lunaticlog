@@ -86,16 +86,6 @@ log_gen.run()
 
 * `out_format`: format of output logs
 
-* `lines`:  kinds of log lines to output
-
-* `heartbeat_interval`: interval of heartbeat lines
-
-* `access_interval`:  interval of access lines
-
-* `methods`:  HTTP log methods to generate
-
-* `methods_p`:  corresponding distribution of HTTP log methods
-
 * `mode`: log traffic mode
 
 ## License
