@@ -188,13 +188,31 @@ def test_attr_out_format():
 	assert str(error_info.value) == "Unsupported output format"
 
 
-##########################################
-#####
-#####   Test 
-#####
-##########################################
+def test_attr_rotation():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.rotation = 'true'
+	assert str(error_info.value) == "rotation must be either True or False"
 
 
+def test_attr_rotation_size():
+	gen = apache_gen()
+	with pytest.raises(Exception) as error_info:
+		gen.rotation_size = 76.9
+	assert str(error_info.value) == "rotation_size must be an integer"
+
+
+#def test_attr_out_log():
+#	gen = apache_gen()
+#	with pytest.raises(Exception) as error_info:
+#		gen.out_log = 'XXXOHA'
+#	assert str(error_info.value) == "Invalid output path"
+
+##########################################
+#####
+#####   Test Log Field Generation Methods
+#####
+##########################################
 def test_get_time_field():
 	gen = apache_gen()
 	try:
@@ -293,6 +311,11 @@ def test_get_size():
 		assert False
 
 
+##########################################
+#####
+#####   Test Log Generation Results
+#####
+##########################################
 def test_heartbeat_lines_format():
 	gen = apache_gen(out_path='./test_heartbeat_lines_format.txt', forever=False, count=1)
 	gen.lines = ['heartbeat']
@@ -300,9 +323,7 @@ def test_heartbeat_lines_format():
 	
 	try:
 		f = open('./test_heartbeat_lines_format.txt')
-		line = f.readlines()[0]
-		#fields = line.split()
-		#assert len(fields) == 8
+		line = f.readlines()[0]	
 		# Extract the time field
 		log_time = re.findall(r'\[(.*?)\]', line)
 		assert len(log_time) == 1
@@ -332,6 +353,27 @@ def	test_access_lines_format():
 	except:
 		assert False
 
+
+def test_count_control():
+	gen = apache_gen(out_path='./test_count_control.txt', forever=False, count=3)
+	gen.lines = ['heartbeat']
+	gen.run()
+
+	try:
+		f = open('./test_count_control.txt')
+		lines = f.readlines()
+		assert len(lines) == 3
+	except:
+		assert False
+
+
+def test_rotation():
+	gen = apache_gen(out_path='./test_rotation.txt', forever=False, count=10)
+	gen.rotation_size = 10
+	gen.lines = ['heartbeat', 'access']
+	gen.run()
+	assert gen.rotation_size == 10
+	assert gen.out_log == './test_rotation.txt.9'
 
 # Test param: lines
 '''def test_lines_control():

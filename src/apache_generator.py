@@ -17,7 +17,7 @@ from . import log_gen
 #################################
 class apache_gen(log_gen):
 
-	def __init__(self, out_path='./apache.log', out_format=['stdout', 'log'], mode='uniform', forever=True, count=1):
+	def __init__(self, out_path='./apache.log', out_format=['stdout', 'log'], mode='uniform', rotation=False, forever=True, count=1):
 		# Load configuration data
 		config_file = './config/apache_gen.json'
 		with open(config_file, 'r') as f:
@@ -39,7 +39,10 @@ class apache_gen(log_gen):
 		self._access_interval = self.config["access_interval"]
 		# Assign the generator mode
 		self._mode = mode
-
+		# Assign the rotation attribute 
+		self._rotation = rotation
+		self._rotation_size = self.config["rotation_size"]
+		self.rotation_id = 1
 		# Assign the output format
 		self._out_format = out_format
 		# Assign the output path
@@ -47,6 +50,8 @@ class apache_gen(log_gen):
 		if 'log' in self.out_format or 'gzip' in self.out_format:
 			self.f_log = open(self.out_log, 'w')
 		#self.out_gz
+
+	######################### property ###############################
 
 	# Predefined lines_full
 	# ['heartbeat', 'access']
@@ -131,6 +136,28 @@ class apache_gen(log_gen):
 	def heartbeat_interval(self):
 		return self._heartbeat_interval
 
+
+	@property
+	def rotation(self):
+		return self._rotation
+
+	@rotation.setter
+	def rotation(self, val):
+		if val not in [True, False]:
+			raise Exception("rotation must be either True or False")
+		self._rotation = val
+
+	@property
+	def rotation_size(self):
+		return self._rotation_size
+
+	@rotation_size.setter
+	def rotation_size(self, val):
+		# rotation_size must be an integer
+		if type(val) != type(1):
+			raise Exception("rotation_size must be an integer")
+		self._rotation_size = val
+
 	# When given heartbeat_interval, 
 	# heartbeat must be one of the methods to be generated
 	@heartbeat_interval.setter
@@ -187,6 +214,15 @@ class apache_gen(log_gen):
 	def out_log(self):
 		return self._out_log
 
+	@out_log.setter
+	def out_log(self, val):
+		try:
+			f = open(val, 'w')
+		except:
+			raise Exception("Invalid output path")
+		self._out_log = val
+
+	######################### run ###############################
 
 	def run(self):
 		loop = asyncio.new_event_loop()
@@ -202,12 +238,12 @@ class apache_gen(log_gen):
 				if 'gzip' in self.out_format:
 					check_call(['gzip', self.out_log])
 
-
+	######################### coroutine ###############################
 
 	@coroutine
 	def heartbeat_lines(self):
 		while self.forever or self.count > 0:
-			t = self.get_time_field()
+			t = self.get_time_field()	
 			self.output_heartbeat(t)
 			#self.log.info('- - - [%s] "%s" - -', t, 'HEARTBEAT')	
 			if self.count > 0:
@@ -220,7 +256,24 @@ class apache_gen(log_gen):
 		if 'stdout' in self.out_format:
 			print(string)
 		if 'log' in self.out_format:
+			self.rotate()	
+			#self.f_log.write(self.out_log+str(self.f_log.tell())+'\n')
 			self.f_log.write(string + '\n')
+
+
+	# Rotate output
+	def rotate(self):
+		if self.f_log.tell() > self.rotation_size:	
+			self.f_log.close()	
+			if self.out_log.split('.')[-1] in ['log', 'txt']:
+				self.out_log += '.1'
+			else:
+				self.out_log = '.'.join(self.out_log.split('.')[:-1])
+				self.rotation_id += 1
+				self.out_log += '.'
+				self.out_log += str(self.rotation_id)
+			self.f_log = open(self.out_log, 'w')
+			
 
 	# Derive the timestamp from current time
 	def get_time_field(self):
@@ -252,7 +305,7 @@ class apache_gen(log_gen):
 			sleep_time = self.get_access_sleep_time()
 			yield from asyncio.sleep(sleep_time)
 
-
+	
 	
 	# Output the access line (to stdout, file, ...)
 	def output_access(self, ip, user_identifier, user_id, t, msg, code, size):
@@ -260,6 +313,7 @@ class apache_gen(log_gen):
 		if 'stdout' in self.out_format:
 			print(string)
 		if 'log' in self.out_format:
+			self.rotate()
 			self.f_log.write(string + '\n')
 
 
