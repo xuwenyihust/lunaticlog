@@ -6,7 +6,7 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/xuwenyihust/Visor/blob/master/LICENSE)
 
 
-# Lunaticlog
+# Lunaticlog: Fake Log Generator - [Read The Docs](https://xuwenyihust.github.io/lunaticlog/lunaticlog/html/)
 Lunaticlog is a mock HTTP log generator package, use it's fake log workloads to test if your monitor / analyzer can survive various extreme conditions. 
 
 
