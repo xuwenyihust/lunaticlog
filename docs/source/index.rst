@@ -21,9 +21,8 @@ A simple usage example:
 Source Code
 -----------
 
-Get the `source code`_.
-
-_`source code`: https://github.com/xuwenyihust/lunaticlog/
+Get the `source code
+<https://github.com/xuwenyihust/lunaticlog/>`_.
 
 Features
 --------
@@ -45,11 +44,10 @@ For full documentation, including installation, tutorials and PDF documents, ple
 
 License
 -------
-`MIT`_ License
+`MIT
+<https://github.com/xuwenyihust/lunaticlog/blob/master/LICENSE>`_ License
 
 Copyright (c) 2017 WenyiXu
-
-_`MIT`: https://github.com/xuwenyihust/lunaticlog/blob/master/LICENSE
 
 .. toctree::
    :maxdepth: 2
