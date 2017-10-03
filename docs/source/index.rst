@@ -1,3 +1,5 @@
+.. _toc:
+
 lunaticlog: Fake log generator
 ==============================
 
@@ -17,5 +19,8 @@ Copyright (c) 2017 WenyiXu
 
 .. _`MIT`: https://github.com/xuwenyihust/lunaticlog/blob/master/LICENSE
 
+.. toctree::
+   :maxdepth: 2
 
+   getting-started
 
