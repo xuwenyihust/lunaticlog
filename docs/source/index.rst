@@ -10,7 +10,12 @@ Welcome to lunaticlog's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   Getting Started
+   Install
+   Examples
+   Frequently Asked Questions
+   Contact
+   License
 
 Indices and tables
 ==================
