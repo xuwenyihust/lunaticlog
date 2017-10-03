@@ -21,11 +21,27 @@ A simple usage example:
 Source Code
 -----------
 
+Get the `source code`_.
+
+_`source code`: https://github.com/xuwenyihust/lunaticlog/
+
 Features
 --------
 
+- Generate log in Apache Access format, Nginx format [TODO], AWS S3 format [TODO]
+
+- Log file rotation configurable 
+
+- Can control the distributions of log fields contents
+
+- Different log generation mode for stress testing
+
+- Python3.4, Python3.5, Python3.6
+
 Documentation
 -------------
+
+For full documentation, including installation, tutorials and PDF documents, please see https://xuwenyihust.github.io/lunaticlog/lunaticlog/html/.
 
 License
 -------
@@ -33,7 +49,7 @@ License
 
 Copyright (c) 2017 WenyiXu
 
-_`MIT`: <https://github.com/xuwenyihust/lunaticlog/blob/master/LICENSE>
+_`MIT`: https://github.com/xuwenyihust/lunaticlog/blob/master/LICENSE
 
 .. toctree::
    :maxdepth: 2
