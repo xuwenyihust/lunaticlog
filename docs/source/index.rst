@@ -24,13 +24,3 @@ Copyright (c) 2017 WenyiXu
 
 
 
-.. toctree::
-   :maxdepth: 2
-
-   getting-started
-   install
-   examples
-   frequently-asked-questions
-   contact
-   license
-
