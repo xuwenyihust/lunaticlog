@@ -1,3 +1,6 @@
+# Docs
+docs/lunaticlog/doctrees/
+
 # Testing log
 /tests/log/
 *.txt
