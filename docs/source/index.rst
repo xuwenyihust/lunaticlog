@@ -5,12 +5,11 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-   Getting Started
-   Install
-   Examples
-   Frequently Asked Questions
-   Contact
-   License
+   getting-started
+   install
+   examples
+   frequently-asked-questions
+   contact
+   license
 

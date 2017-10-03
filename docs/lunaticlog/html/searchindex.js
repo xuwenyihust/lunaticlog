@@ -1,1 +1,1 @@
-Search.setIndex({envversion:50,filenames:["index"],objects:{},objnames:{},objtypes:{},terms:{index:[],modul:[],page:[],search:[]},titles:["&lt;no title&gt;"],titleterms:{document:[],indice:[],lunaticlog:[],tabl:[],welcom:[]}})
+Search.setIndex({envversion:50,filenames:["getting-started","index"],objects:{},objnames:{},objtypes:{},terms:{get:0,index:[],modul:[],page:[],search:[],start:0},titles:["&lt;no title&gt;","&lt;no title&gt;"],titleterms:{document:[],indice:[],lunaticlog:[],tabl:[],welcom:[]}})
