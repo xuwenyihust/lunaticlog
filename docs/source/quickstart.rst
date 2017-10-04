@@ -84,7 +84,7 @@ Lunaticlogs can create chaos to help you stress test your system. Now it has 3 d
 
 	Generate logs at a random rate, which is uniformly distributed.
 
-	.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_uniform.png
+.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_uniform.png
 		:width: 320 px
 		:height: 240 px
 		:align: left
@@ -93,7 +93,7 @@ Lunaticlogs can create chaos to help you stress test your system. Now it has 3 d
 
 	Generate logs at highest speed configured.
 
-	.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_push.png
+.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_push.png
 		:width: 320 px
 		:height: 240 px
 		:align: left
@@ -102,7 +102,7 @@ Lunaticlogs can create chaos to help you stress test your system. Now it has 3 d
 
 	Generate logs at sudden very high rates periodically.
 
-	.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_spike.png
+.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_spike.png
 		:width: 320 px
 		:height: 240 px
 		:align: left
