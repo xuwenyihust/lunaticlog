@@ -17,6 +17,12 @@ A simple usage example:
 
 	log_gen.run()
 
+.. code-block:: none
+	
+	127.0.0.1 user-identifier frank [1/Oct/2017:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326
+	127.0.0.1 user-identifier james [1/Oct/2017:13:55:37 -0700] "POST /README.txt HTTP/1.0" 200 2326
+	127.0.0.1 user-identifier putin [1/Oct/2017:13:55:38 -0700] "GET /image/cat.gif HTTP/1.0" 200 2326
+
 
 Source Code
 -----------

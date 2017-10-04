@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="lunaticlog 0.1.0 documentation" href="#"/>
         <link rel="next" title="Contact" href="contact.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="contact.html">Contact</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="log-generating-summary.html">Log Generating Summary</a></li>
@@ -97,8 +106,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">lunaticlog</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">lunaticlog</a>
+        
       </nav>
 
 
@@ -107,23 +118,40 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="#">Docs</a> &raquo;</li>
-      
-    <li>lunaticlog: Fake log generator</li>
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>lunaticlog: Fake log generator</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/index.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -131,7 +159,7 @@
             
   <div class="section" id="lunaticlog-fake-log-generator">
 <span id="toc"></span><h1>lunaticlog: Fake log generator<a class="headerlink" href="#lunaticlog-fake-log-generator" title="Permalink to this headline">¶</a></h1>
-<p>Lunaticlog is a mock HTTP log generator package, use it&#8217;s fake log workloads to test if your monitor / analyzer can survive various extreme conditions.</p>
+<p>Lunaticlog is a mock HTTP log generator package, use it’s fake log workloads to test if your monitor / analyzer can survive various extreme conditions.</p>
 <p>A simple usage example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1">#content of test_sample.py</span>
 
@@ -140,6 +168,11 @@
 <span class="n">log_gen</span> <span class="o">=</span> <span class="n">apache_gen</span><span class="p">(</span><span class="n">out_path</span><span class="o">=</span><span class="s1">&#39;./apache.log&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="n">log_gen</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none"><div class="highlight"><pre><span></span>127.0.0.1 user-identifier frank [1/Oct/2017:13:55:36 -0700] &quot;GET /apache_pb.gif HTTP/1.0&quot; 200 2326
+127.0.0.1 user-identifier james [1/Oct/2017:13:55:37 -0700] &quot;POST /README.txt HTTP/1.0&quot; 200 2326
+127.0.0.1 user-identifier putin [1/Oct/2017:13:55:38 -0700] &quot;GET /image/cat.gif HTTP/1.0&quot; 200 2326
 </pre></div>
 </div>
 <div class="section" id="source-code">
@@ -177,12 +210,15 @@
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="contact.html" class="btn btn-neutral float-right" title="Contact" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="contact.html" class="btn btn-neutral float-right" title="Contact" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -217,7 +253,8 @@
             VERSION:'0.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>
