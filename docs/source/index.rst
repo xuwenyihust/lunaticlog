@@ -55,6 +55,9 @@ License
 
 Copyright (c) 2017 WenyiXu
 
+
+Contents
+--------
 .. toctree::
    :maxdepth: 2
 
