@@ -167,7 +167,7 @@
             
   <div class="section" id="quickstart">
 <span id="id1"></span><h1>QuickStart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
-<p>Sometimes we want to quickly test our log monitor and analyzer, to see if they can perform correctly,but don’t have log sources in hand. Lunatilog gives you the ability to create fake log loads, which supports log rotation and content distribution control. It can also stress testing the system by generating traffic spikes.</p>
+<p>Sometimes we want to quickly test our log monitor and analyzer, to see if they can perform correctly,but don’t have log sources in hand. Lunaticlog gives you the ability to create fake log loads, which supports log rotation and content distribution control. It can also stress testing the system by generating traffic spikes.</p>
 <div class="section" id="log-generating-summary">
 <h2>Log Generating Summary<a class="headerlink" href="#log-generating-summary" title="Permalink to this headline">¶</a></h2>
 <p>Begin by importing a log generator module:</p>
@@ -219,6 +219,16 @@
 </div>
 <div class="section" id="log-field-content-distribution">
 <h2>Log Field Content Distribution<a class="headerlink" href="#log-field-content-distribution" title="Permalink to this headline">¶</a></h2>
+<p>Since we are trying to build a fake log generator to simulate a real cluster, we are eager to add as much randomness as possible to the generated logs, to make it look more similar to real ones.</p>
+<p>To make them more realistic, we also want to fill in log fileds using contents with some given distributions.</p>
+<p>For example, we may want to generate more <code class="docutils literal"><span class="pre">GET</span></code> messages than <code class="docutils literal"><span class="pre">POST</span></code> ones.</p>
+<p>To configure the distributions, use Apache Access Log’s HTTP method field as an example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span># content of config/apache_gen.json
+&quot;methods&quot;: [&quot;GET&quot;, &quot;POST&quot;, &quot;PUT&quot;, &quot;DELETE&quot;],
+&quot;methods_p&quot;: [0.7,0.1,0.1,0.1],
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">methods_p</span></code> list configures the distributions of corresponding HTTP methods in list <code class="docutils literal"><span class="pre">methods</span></code>.</p>
 </div>
 <div class="section" id="log-generation-mode">
 <h2>Log Generation Mode<a class="headerlink" href="#log-generation-mode" title="Permalink to this headline">¶</a></h2>

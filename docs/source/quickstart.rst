@@ -3,7 +3,7 @@
 QuickStart
 ==========
 
-Sometimes we want to quickly test our log monitor and analyzer, to see if they can perform correctly,but don't have log sources in hand. Lunatilog gives you the ability to create fake log loads, which supports log rotation and content distribution control. It can also stress testing the system by generating traffic spikes.
+Sometimes we want to quickly test our log monitor and analyzer, to see if they can perform correctly,but don't have log sources in hand. Lunaticlog gives you the ability to create fake log loads, which supports log rotation and content distribution control. It can also stress testing the system by generating traffic spikes.
 
 Log Generating Summary
 ----------------------
@@ -71,7 +71,21 @@ And turn on the log rotation when creating generator objects:
 Log Field Content Distribution
 ------------------------------
 
+Since we are trying to build a fake log generator to simulate a real cluster, we are eager to add as much randomness as possible to the generated logs, to make it look more similar to real ones.
 
+To make them more realistic, we also want to fill in log fileds using contents with some given distributions.
+
+For example, we may want to generate more ``GET`` messages than ``POST`` ones.
+
+To configure the distributions, use Apache Access Log's HTTP method field as an example:
+
+.. code-block:: none
+	
+	# content of config/apache_gen.json
+	"methods": ["GET", "POST", "PUT", "DELETE"],
+	"methods_p": [0.7,0.1,0.1,0.1],
+	
+``methods_p`` list configures the distributions of corresponding HTTP methods in list ``methods``.
 
 
 Log Generation Mode
