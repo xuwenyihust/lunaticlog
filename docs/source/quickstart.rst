@@ -85,7 +85,9 @@ Lunaticlogs can create chaos to help you stress test your system. Now it has 3 d
 	Generate logs at a random rate, which is uniformly distributed.
 
 	.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_uniform.png
-
+		:width: 320 px
+		:height: 240 px
+		:align: center
 
 - Push Mode
 
