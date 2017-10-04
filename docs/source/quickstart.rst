@@ -87,20 +87,25 @@ Lunaticlogs can create chaos to help you stress test your system. Now it has 3 d
 	.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_uniform.png
 		:width: 320 px
 		:height: 240 px
-		:align: center
+		:align: left
 
 - Push Mode
 
 	Generate logs at highest speed configured.
 
 	.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_push.png
+		:width: 320 px
+		:height: 240 px
+		:align: left
 
 - Spike Mode
 
 	Generate logs at sudden very high rates periodically.
 
 	.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_spike.png
-
+		:width: 320 px
+		:height: 240 px
+		:align: left
 
 Select the modes during generator instantiation:
 
