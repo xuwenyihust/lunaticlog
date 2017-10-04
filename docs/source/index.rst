@@ -58,12 +58,16 @@ Copyright (c) 2017 WenyiXu
 .. toctree::
    :maxdepth: 2
 
+   installation
+
+   quickstart
+
    contact
 
    license
 
-   log-generating-summary
+   
 
-   apache_gen-module
+  
 
 
