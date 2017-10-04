@@ -222,6 +222,31 @@
 </div>
 <div class="section" id="log-generation-mode">
 <h2>Log Generation Mode<a class="headerlink" href="#log-generation-mode" title="Permalink to this headline">¶</a></h2>
+<p>Lunaticlogs can create chaos to help you stress test your system. Now it has 3 different log generation modes:</p>
+<ul>
+<li><p class="first">Uniform Mode</p>
+<blockquote>
+<div><p>Generate logs at a random rate, which is uniformly distributed.</p>
+<img alt="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_uniform.png" src="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_uniform.png" />
+</div></blockquote>
+</li>
+<li><p class="first">Push Mode</p>
+<blockquote>
+<div><p>Generate logs at highest speed configured.</p>
+<img alt="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_push.png" src="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_push.png" />
+</div></blockquote>
+</li>
+<li><p class="first">Spike Mode</p>
+<blockquote>
+<div><p>Generate logs at sudden very high rates periodically.</p>
+<img alt="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_spike.png" src="https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_spike.png" />
+</div></blockquote>
+</li>
+</ul>
+<p>Select the modes during generator instantiation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">log_gen</span> <span class="o">=</span> <span class="n">apache_gen</span><span class="p">(</span><span class="n">out_path</span><span class="o">=</span><span class="s1">&#39;./apache.log&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 

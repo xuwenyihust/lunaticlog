@@ -77,3 +77,35 @@ Log Field Content Distribution
 Log Generation Mode
 -------------------
 
+Lunaticlogs can create chaos to help you stress test your system. Now it has 3 different log generation modes:
+
+
+- Uniform Mode
+
+	Generate logs at a random rate, which is uniformly distributed.
+
+	.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_uniform.png
+
+
+- Push Mode
+
+	Generate logs at highest speed configured.
+
+	.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_push.png
+
+- Spike Mode
+
+	Generate logs at sudden very high rates periodically.
+
+	.. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_spike.png
+
+
+Select the modes during generator instantiation:
+
+.. code-block:: python
+
+	log_gen = apache_gen(out_path='./apache.log', mode='uniform')
+
+
+
+
