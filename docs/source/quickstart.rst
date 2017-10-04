@@ -87,7 +87,7 @@ Lunaticlogs can create chaos to help you stress test your system. Now it has 3 d
 .. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_uniform.png
 		:width: 320 px
 		:height: 240 px
-		:align: left
+		:align: center
 
 - Push Mode
 
@@ -96,7 +96,7 @@ Lunaticlogs can create chaos to help you stress test your system. Now it has 3 d
 .. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_push.png
 		:width: 320 px
 		:height: 240 px
-		:align: left
+		:align: center
 
 - Spike Mode
 
@@ -105,7 +105,8 @@ Lunaticlogs can create chaos to help you stress test your system. Now it has 3 d
 .. image:: https://raw.githubusercontent.com/xuwenyihust/lunaticlog/master/img/mode_spike.png
 		:width: 320 px
 		:height: 240 px
-		:align: left
+		:align: center
+
 
 Select the modes during generator instantiation:
 
